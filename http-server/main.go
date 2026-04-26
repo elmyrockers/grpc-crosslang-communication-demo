@@ -5,10 +5,15 @@ import (
 	"log"
 	"github.com/elmyrockers/grpc-crosslang-in-action/http-server/controller"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/template/jet/v2"
 )
 
 func main() {
-	app := fiber.New()
+	// Create app with Jet template engine
+		engine := jet.New("./views", ".jet")
+		app := fiber.New(fiber.Config{
+			Views: engine,
+		})
 	
 	// Routes
 		app.Get("/", func(c *fiber.Ctx) error {
