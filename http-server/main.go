@@ -3,7 +3,7 @@ package main
 import (
 	// "fmt"
 	"log"
-	"github.com/elmyrockers/grpc-crosslang-in-action/http-server/controller"
+	"github.com/elmyrockers/grpc-crosslang-communication-demo/http-server/controller"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/jet/v2"
 )
