@@ -12,8 +12,9 @@ type UserController struct {
 }
 
 func (u *UserController) List( c *fiber.Ctx ) error {
-	fmt.Println( "List of users" )
-	return nil
+	return c.Render("index", fiber.Map{
+		"title": "gRPC Demo",
+	})
 }
 
 func (u *UserController) New( c *fiber.Ctx ) error {
