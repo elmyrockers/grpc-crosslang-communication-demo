@@ -15,14 +15,16 @@ func main() {
 			Views: engine,
 		})
 	
-	// Routes
+	// Web Routes
 		app.Get("/", func(c *fiber.Ctx) error {
 			return c.Redirect("/users")
 		})
-
 		userController := controller.UserController{}
 		app.Get("/users", userController.List )
-		app.Get("/users/new", userController.New )
+
+	// API Routes
+		api := app.Group( "/api" )
+		api.Get("/users", userController.All )
 
 	log.Fatal(app.Listen(":3000"))
 }
