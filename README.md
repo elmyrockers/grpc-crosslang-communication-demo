@@ -13,10 +13,19 @@ Minimal cross-language gRPC demo illustrating service-to-service communication b
 ![Jet](https://img.shields.io/badge/Jet-Template-blue?style=for-the-badge) -->
 
 
-![Go](https://img.shields.io/badge/Go-Backend-blue?style=flat-square&logo=go&logoColor=white)
+<!-- ![Go](https://img.shields.io/badge/Go-Backend-blue?style=flat-square&logo=go&logoColor=white)
 ![Fiber](https://img.shields.io/badge/Fiber-HTTP-lightgrey?style=flat-square)
 ![gRPC](https://img.shields.io/badge/gRPC-RPC-blueviolet?style=flat-square&logo=grpc&logoColor=white)
 ![FlatBuffers](https://img.shields.io/badge/FlatBuffers-Serialization-orange?style=flat-square)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-UI-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
 ![Alpine.js](https://img.shields.io/badge/Alpine.js-Interactivity-8BC0D0?style=flat-square)
-![Jet](https://img.shields.io/badge/Jet-Template-grey?style=flat-square)
+![Jet](https://img.shields.io/badge/Jet-Template-grey?style=flat-square) -->
+
+
+![Go](https://img.shields.io/badge/Go-Backend-00ADD8?style=flat-square&logo=go&logoColor=white)
+![Fiber](https://img.shields.io/badge/Fiber-Web-00ACD7?style=flat-square)
+![gRPC](https://img.shields.io/badge/gRPC-RPC-00A1E0?style=flat-square&logo=grpc&logoColor=white)
+![FlatBuffers](https://img.shields.io/badge/FlatBuffers-Binary-FF6F00?style=flat-square)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-UI-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
+![Alpine.js](https://img.shields.io/badge/Alpine.js-Interactivity-8BC0D0?style=flat-square)
+![Jet](https://img.shields.io/badge/Jet-Template-6C757D?style=flat-square)
