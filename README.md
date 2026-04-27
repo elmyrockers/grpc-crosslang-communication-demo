@@ -51,7 +51,7 @@ Minimal cross-language gRPC demo illustrating service-to-service communication b
 ![gRPC](https://img.shields.io/badge/gRPC-RPC-4285F4?style=flat-square)
 ![FlatBuffers](https://img.shields.io/badge/FlatBuffers-Serialization-005F9E?style=plastic) -->
 
-![Go](https://img.shields.io/badge/Go-Backend-lightgrey?style=flat-square)
+<!-- ![Go](https://img.shields.io/badge/Go-Backend-lightgrey?style=flat-square)
 ![Fiber](https://img.shields.io/badge/Fiber-HTTP-lightgrey?style=flat-square)
 ![gRPC](https://img.shields.io/badge/gRPC-RPC-lightgrey?style=flat-square)
 ![FlatBuffers](https://img.shields.io/badge/FlatBuffers-Serialization-lightgrey?style=flat-square)
@@ -62,3 +62,16 @@ Minimal cross-language gRPC demo illustrating service-to-service communication b
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-Frontend-lightgrey?style=flat-square)
 ![Alpine.js](https://img.shields.io/badge/Alpine-UI-lightgrey?style=flat-square)
 ![Docker](https://img.shields.io/badge/Docker-Container-lightgrey?style=flat-square)
+ -->
+
+![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge)
+![Fiber](https://img.shields.io/badge/Fiber-00ACD7?style=for-the-badge)
+![gRPC](https://img.shields.io/badge/gRPC-4285F4?style=for-the-badge)
+![FlatBuffers](https://img.shields.io/badge/FlatBuffers-005F9E?style=for-the-badge)
+![Jet](https://img.shields.io/badge/Jet-FF5A5F?style=for-the-badge)
+![C++](https://img.shields.io/badge/C++-00599C?style=for-the-badge)
+![Rust](https://img.shields.io/badge/Rust-000000?style=for-the-badge)
+![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-38B2AC?style=for-the-badge)
+![Alpine.js](https://img.shields.io/badge/Alpine.js-77C1D2?style=for-the-badge)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge)
