@@ -22,10 +22,10 @@ Minimal cross-language gRPC demo illustrating service-to-service communication b
 ![Jet](https://img.shields.io/badge/Jet-Template-grey?style=flat-square) -->
 
 
-![Go](https://img.shields.io/badge/Go-0F172A?style=flat-square&logo=go&logoColor=00ADD8)
-![Fiber](https://img.shields.io/badge/Fiber-0F172A?style=flat-square&logoColor=white)
-![gRPC](https://img.shields.io/badge/gRPC-0F172A?style=flat-square&logo=grpc&logoColor=white)
-![FlatBuffers](https://img.shields.io/badge/FlatBuffers-0F172A?style=flat-square&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-0F172A?style=flat-square&logo=tailwind-css&logoColor=38BDF8)
-![Alpine.js](https://img.shields.io/badge/Alpine.js-0F172A?style=flat-square&logo=alpine.js&logoColor=8BC0D0)
-![Jet](https://img.shields.io/badge/Jet-0F172A?style=flat-square&logoColor=white)
+![Go](https://img.shields.io/badge/Go-Backend-0F172A?style=flat-square)
+![Fiber](https://img.shields.io/badge/Fiber-HTTP-0F172A?style=flat-square)
+![gRPC](https://img.shields.io/badge/gRPC-RPC-0F172A?style=flat-square)
+![FlatBuffers](https://img.shields.io/badge/FlatBuffers-Serialization-0F172A?style=flat-square)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-Frontend-0F172A?style=flat-square)
+![Alpine.js](https://img.shields.io/badge/Alpine-UI-0F172A?style=flat-square)
+![Jet](https://img.shields.io/badge/Jet-Template-0F172A?style=flat-square)
