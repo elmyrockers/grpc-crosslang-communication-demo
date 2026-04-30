@@ -6,10 +6,9 @@
 		<title>gRPC Demo</title>
 
 		<!-- Tailwind and Alpine -->
-		<script src="https://cdn.tailwindcss.com"></script>
-		<script src="https://cdn.jsdelivr.net/npm/alpinejs" defer></script>
-
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script src="//unpkg.com/alpinejs" defer></script>
 	</head>
 
 	<body class="bg-gray-100 min-h-screen flex flex-col">
@@ -20,15 +19,15 @@
 		</header>
 
 		<!-- Main Content -->
-		<main class="flex-1 p-6" x-data="{ loading: false }">
+		<main class="flex-1 p-6" x-data="app">
 			<div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow">
 				<!-- Title -->
 				<div class="flex justify-between items-center mb-4">
 					<h2 class="text-lg font-bold">List of Users</h2>
 
-					<!-- Example Button -->
+					<!-- New User Button -->
 					<button 
-						@click="loading = true; setTimeout(() => loading = false, 1000)"
+						@click="openCreateModal"
 						class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
 						New User
 					</button>
@@ -85,8 +84,92 @@
 				</div>
 
 				<!-- Loading State -->
-				<div x-show="loading" class="mt-4 text-blue-600 text-sm">
-					Loading data from gRPC service...
+				<div x-show="loading" class="mt-4 text-blue-600 text-sm">Loading data from gRPC service...</div>
+			</div>
+
+			<!-- Overlay -->
+			<div x-show="showCreateModal" class="fixed inset-0 z-50 flex items-center justify-center">
+				<!-- Backdrop -->
+				<div class="absolute inset-0 bg-black/40"></div>
+				
+				<!-- Modal -->
+				<div class="relative w-full max-w-md bg-white rounded-xl shadow-lg border border-gray-200">
+					<!-- Header -->
+					<div class="flex items-center justify-between px-6 py-4 border-b">
+							<h2 class="text-gray-800 text-lg font-semibold">New User</h2>
+							<button @click="closeCreateModal" class="text-gray-400 hover:text-gray-600 text-xl leading-none">&times;</button>
+					</div>
+
+					<div class="p-6 space-y-5">
+							<!-- Name -->
+							<div class="flex items-center gap-4">
+								<!-- Label -->
+								<label class="w-32 text-sm text-gray-700">Name</label>
+							
+								<!-- Input Group -->
+								<div class="flex flex-1">
+									<!-- Left addon -->
+									<span class="inline-flex items-center px-3 text-sm text-gray-600 bg-gray-100 border border-gray-300 rounded-l-lg">
+										<i class="fa-solid fa-user"></i>
+									</span>
+
+									<!-- Input -->
+									<input type="text" placeholder="Fullname" class="w-full border-t border-b border-r border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-r-lg">
+								</div>
+							</div>
+
+							<!-- Email -->
+							<div class="flex items-center gap-4">
+								<label class="w-32 text-sm text-gray-700">Email</label>
+								<div class="flex flex-1">
+									<!-- Prefix / group text -->
+									<span class="inline-flex items-center px-3 text-sm text-gray-600 bg-gray-100 border border-gray-300 rounded-l-lg"><i class="fa-solid fa-envelope"></i></span>
+
+									<!-- Input -->
+									<input type="text" placeholder="Email" class="w-full border-t border-b border-r border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-r-lg">
+								</div>
+							</div>
+
+							<!-- Age -->
+							<div class="flex items-center gap-4">
+								<!-- Label -->
+								<label class="w-32 text-sm text-gray-700">Age</label>
+							
+								<!-- Input Group -->
+								<div class="flex flex-1">
+									<!-- Left addon -->
+									<span class="inline-flex items-center px-3 text-sm text-gray-600 bg-gray-100 border border-gray-300 rounded-l-lg">
+										<i class="fa-solid fa-clock"></i>
+									</span>
+
+									<!-- Input -->
+									<input type="number" min="1" max="100" placeholder="Age" class="w-full border-t border-b border-r border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-r-lg">
+								</div>
+							</div>
+
+							<!-- Location -->
+							<div class="flex items-center gap-4">
+								<!-- Label -->
+								<label class="w-32 text-sm text-gray-700">Location</label>
+							
+								<!-- Input Group -->
+								<div class="flex flex-1">
+									<!-- Left addon -->
+									<span class="inline-flex items-center px-3 text-sm text-gray-600 bg-gray-100 border border-gray-300 rounded-l-lg">
+										<i class="fa-solid fa-location-dot"></i>
+									</span>
+
+									<!-- Input -->
+									<input type="text" placeholder="City / Country" class="w-full border-t border-b border-r border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-r-lg">
+								</div>
+							</div>
+					</div>
+
+					<!-- Footer -->
+					<div class="flex justify-end gap-3 px-6 py-4 border-t bg-gray-50 rounded-b-xl">
+						<button @click="closeCreateModal" class="px-4 py-2 text-sm border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100">Cancel</button>
+						<button class="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">Save</button>
+					</div>
 				</div>
 			</div>
 		</main>
@@ -99,109 +182,21 @@
 
 
 
-
-
-
-		<!-- Overlay -->
-		<div class="fixed inset-0 z-50 flex items-center justify-center">
-			<!-- Backdrop -->
-			<div class="absolute inset-0 bg-black/40"></div>
-			
-			<!-- Modal -->
-			<div class="relative w-full max-w-md bg-white rounded-xl shadow-lg border border-gray-200">
-			
-				<!-- Header -->
-				<div class="flex items-center justify-between px-6 py-4 border-b">
-					<h2 class="text-gray-800 text-lg font-semibold">New User</h2>
-					<button class="text-gray-400 hover:text-gray-600 text-xl leading-none">&times;</button>
-				</div>
-
-				<div class="p-6 space-y-5">
-					<!-- Name -->
-					<div class="flex items-center gap-4">
-						<!-- Label -->
-						<label class="w-32 text-sm text-gray-700">Name</label>
-					
-						<!-- Input Group -->
-						<div class="flex flex-1">
-							<!-- Left addon -->
-							<span class="inline-flex items-center px-3 text-sm text-gray-600 bg-gray-100 border border-gray-300 rounded-l-lg">
-								<i class="fa-solid fa-user"></i>
-							</span>
-
-							<!-- Input -->
-							<input type="text" placeholder="Enter full name" class="w-full border-t border-b border-r border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-r-lg">
-						</div>
-					</div>
-
-					<!-- Email -->
-					<div class="flex items-center gap-4">
-						<label class="w-32 text-sm text-gray-700">Email</label>
-						<div class="flex flex-1">
-							<!-- Prefix / group text -->
-							<span class="inline-flex items-center px-3 text-sm text-gray-600 bg-gray-100 border border-gray-300 rounded-l-lg"><i class="fa-solid fa-envelope"></i></span>
-
-							<!-- Input -->
-							<input type="text" placeholder="Email" class="w-full border-t border-b border-r border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-r-lg">
-						</div>
-					</div>
-
-					<!-- Age -->
-					<div class="flex items-center gap-4">
-						<!-- Label -->
-						<label class="w-32 text-sm text-gray-700">Age</label>
-					
-						<!-- Input Group -->
-						<div class="flex flex-1">
-							<!-- Left addon -->
-							<span class="inline-flex items-center px-3 text-sm text-gray-600 bg-gray-100 border border-gray-300 rounded-l-lg">
-								<i class="fa-solid fa-clock"></i>
-							</span>
-
-							<!-- Input -->
-							<input type="number" min="1" max="100" placeholder="Age" class="w-full border-t border-b border-r border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-r-lg">
-						</div>
-					</div>
-
-					<!-- Location -->
-					<div class="flex items-center gap-4">
-						<!-- Label -->
-						<label class="w-32 text-sm text-gray-700">Location</label>
-					
-						<!-- Input Group -->
-						<div class="flex flex-1">
-							<!-- Left addon -->
-							<span class="inline-flex items-center px-3 text-sm text-gray-600 bg-gray-100 border border-gray-300 rounded-l-lg">
-								<i class="fa-solid fa-location-dot"></i>
-							</span>
-
-							<!-- Input -->
-							<input type="text" placeholder="City / Country" class="w-full border-t border-b border-r border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-r-lg">
-						</div>
-					</div>
-				</div>
-
-				<!-- Footer -->
-				<div class="flex justify-end gap-3 px-6 py-4 border-t bg-gray-50 rounded-b-xl">
-					<button class="px-4 py-2 text-sm border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100">
-						Cancel
-					</button>
-					<button class="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-						Save
-					</button>
-				</div>
-			</div>
-		</div>
-
-
-
-
-
-
-
-
-
-
+		<!-- <div x-data="{ users: ['A', 'B', 'C', 'D', 'E'] }">
+			<template x-for="user in users">
+				<div x-text="user"></div>
+			</template>
+		</div> -->
+		<script>
+			document.addEventListener( 'alpine:init',()=>{
+				Alpine.data( 'app',()=>({
+					loading: false,
+					showCreateModal: false,
+					openCreateModal(){ this.showCreateModal = true },
+					closeCreateModal(){ this.showCreateModal = false }
+				}));
+			});
+		</script>
 
 	</body>
 </html>
