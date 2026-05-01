@@ -315,6 +315,9 @@
 					},
 					closeCreateModal(){ this.showCreateModal = false },
 					closeEditModal(){ this.showEditModal = false },
+
+
+					
 					async loadUsers(){
 						this.loading = true;
 
@@ -331,14 +334,20 @@
 							for( let user of users ){
 								this.users[ user.id ] = user;
 							}
-							
+
 						this.loading = false;
 					},
 					newUser(){
 						console.log( this.newUserForm );
 					},
 					editUser(){
-						console.log( this.editUserForm );
+						// console.log( this.editUserForm );
+						try {
+							const response = await axios.patch(`/api/users/${this.editUserForm.id}`, this.editUserForm );
+							console.log(response.data)
+						} catch (err) {
+							console.error(err)
+						}
 					},
 					deleteUser( id ){
 						console.log( `User ID: ${id}` );
