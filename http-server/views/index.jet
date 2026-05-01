@@ -317,7 +317,7 @@
 					closeEditModal(){ this.showEditModal = false },
 
 
-					
+
 					async loadUsers(){
 						this.loading = true;
 
@@ -340,18 +340,29 @@
 					newUser(){
 						console.log( this.newUserForm );
 					},
-					editUser(){
+					async editUser(){
 						// console.log( this.editUserForm );
 						try {
 							const response = await axios.patch(`/api/users/${this.editUserForm.id}`, this.editUserForm );
-							console.log(response.data)
+							console.log( `/api/users/${this.editUserForm.id}` );
+							console.log( this.editUserForm );
+							console.log( response );
+
+							// console.log(response.data);
 						} catch (err) {
 							console.error(err)
 						}
 					},
-					deleteUser( id ){
-						console.log( `User ID: ${id}` );
-						alert( 'Deleted!' );
+					async deleteUser( id ){
+						try {
+							const response = await axios.delete( `/api/users/${id}` );
+							console.log( `/api/users/${id}` );
+							console.log( response );
+
+							// console.log(response.data);
+						} catch (err) {
+							console.error(err)
+						}
 					}
 				}));
 			});
