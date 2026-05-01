@@ -374,9 +374,16 @@
 					async deleteUser( id ){
 						try {
 							const response = await axios.delete( `/api/users/${id}` );
-							console.log(response.data);
+							if ( response.data.success ) {
+								alert( 'Successfully delete the user!' );
+
+								this.loadUsers();
+								return;
+							}
+							alert( 'Failed to delete the user!' );
 						} catch (err) {
 							console.error(err)
+							alert( `Error: ${err}` );
 						}
 					}
 				}));
