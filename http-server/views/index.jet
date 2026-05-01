@@ -337,18 +337,27 @@
 
 						this.loading = false;
 					},
-					newUser(){
-						console.log( this.newUserForm );
+					async newUser(){
+						try {
+							const response = await axios.post( '/api/users', this.newUserForm );
+							if ( response.data.success ) {
+								alert( 'Successfully add new user!' );
+
+								this.closeCreateModal();
+								this.newUserForm = { name: "", email: "", age: "", location: ""};
+								this.loadUsers();
+								return;
+							}
+							alert( 'Failed to add new user!' );
+						} catch (err) {
+							console.error(err)
+							alert( `Error: ${err}` );
+						}
 					},
 					async editUser(){
-						// console.log( this.editUserForm );
 						try {
 							const response = await axios.patch(`/api/users/${this.editUserForm.id}`, this.editUserForm );
-							console.log( `/api/users/${this.editUserForm.id}` );
-							console.log( this.editUserForm );
-							console.log( response );
-
-							// console.log(response.data);
+							console.log( response.data );
 						} catch (err) {
 							console.error(err)
 						}
@@ -356,10 +365,7 @@
 					async deleteUser( id ){
 						try {
 							const response = await axios.delete( `/api/users/${id}` );
-							console.log( `/api/users/${id}` );
-							console.log( response );
-
-							// console.log(response.data);
+							console.log(response.data);
 						} catch (err) {
 							console.error(err)
 						}
