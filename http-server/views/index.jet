@@ -72,7 +72,7 @@
 											<!-- Delete Button -->
 											<button class="text-red-600 hover:text-red-800 p-1 rounded hover:bg-gray-100" title="Delete" @click="if(confirm('Delete this user?')) deleteUser( user.id )">
 												<!-- Trash Icon -->
-												<svg xmlns="http://www.w3.org/2000/svg" 
+												<svg xmlns="http://www.w3.org/2000/svg"
 													class="w-5 h-5" fill="none" 
 													viewBox="0 0 24 24" stroke="currentColor">
 													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 7h12M9 7v10m6-10v10M10 4h4a1 1 0 011 1v1H9V5a1 1 0 011-1z" />
@@ -272,12 +272,11 @@
 
 
 		<script>
-			var v = null;
 			document.addEventListener( 'alpine:init',()=>{
 				Alpine.data( 'app',()=>({
 					users: {
-						'1': {id:'1', name:"Helmi", email: "helmi@xeno.com.my", age: "35", location: "Kuala Lumpur"},
-						'2': {id:'2', name:"Khairul", email: "khairul@gmail.com", age: "29", location: "Alor Setar"},
+						"1": {id:'1', name:"Helmi", email: "helmi@xeno.com.my", age: "35", location: "Kuala Lumpur"},
+						"2": {id:'2', name:"Khairul", email: "khairul@gmail.com", age: "29", location: "Alor Setar"},
 					},
 					loading: false,
 					showCreateModal: false,
@@ -296,7 +295,7 @@
 						location: "",
 					},
 					reloadUsers(){
-
+						this.users = {};
 					},
 					openCreateModal(){
 						this.showCreateModal = true;
