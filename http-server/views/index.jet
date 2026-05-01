@@ -357,9 +357,18 @@
 					async editUser(){
 						try {
 							const response = await axios.patch(`/api/users/${this.editUserForm.id}`, this.editUserForm );
-							console.log( response.data );
+							if ( response.data.success ) {
+								alert( 'Successfully edit the user!' );
+
+								this.closeEditModal();
+								this.editUserForm = { id: "", name: "", email: "", age: "", location: ""};
+								this.loadUsers();
+								return;
+							}
+							alert( 'Failed to edit the user!' );
 						} catch (err) {
 							console.error(err)
+							alert( `Error: ${err}` );
 						}
 					},
 					async deleteUser( id ){
