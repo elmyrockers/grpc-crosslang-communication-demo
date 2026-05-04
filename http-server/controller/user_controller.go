@@ -3,8 +3,8 @@ package controller
 
 import (
 	"github.com/gofiber/fiber/v2"
-
 	"fmt"
+	// "github.com/davecgh/go-spew/spew"
 )
 
 type User struct {
@@ -14,8 +14,6 @@ type User struct {
 	Location string `json:"location"`
 	Email string `json:"email"`
 }
-
-
 type UserController struct {}
 
 
@@ -38,11 +36,23 @@ type UserController struct {}
 	}
 
 	func (u *UserController) New( c *fiber.Ctx ) error {
-		fmt.Println( "New user" )
-		
-		return c.JSON(fiber.Map{
-			"success": true,
-		});
+		// Get form values
+			payload := struct {
+				Name  string `json:"name"`
+				Email string `json:"email"`
+				Age string `json:"age"`
+				Location string `json:"location"`
+			}{}
+			err := c.BodyParser(&payload);
+			if err != nil {
+				return err
+			}
+
+		// Return response
+			return c.JSON(fiber.Map{
+				"success": err==nil,
+				"payload": payload,
+			})
 	}
 
 	func (u *UserController) Edit( c *fiber.Ctx ) error {
@@ -50,7 +60,7 @@ type UserController struct {}
 
 		return c.JSON(fiber.Map{
 			"success": true,
-		});
+		})
 	}
 
 	func (u *UserController) Delete( c *fiber.Ctx ) error {
@@ -58,5 +68,5 @@ type UserController struct {}
 
 		return c.JSON(fiber.Map{
 			"success": true,
-		});
+		})
 	}
