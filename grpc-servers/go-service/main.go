@@ -21,7 +21,9 @@ func (s *userServer) All(ctx context.Context, req *user.GetRequest) (*user.GetRe
     }
     return &user.GetResponse{Users: users}, nil
 }
-
+func (s *userServer) New(ctx context.Context, req *user.PostRequest) (*user.SuccessResponse, error) {
+    return &user.SuccessResponse{Success: true}
+}
 
 
 
