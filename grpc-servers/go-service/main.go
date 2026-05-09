@@ -11,8 +11,16 @@ import (
 )
 
 
-
-
+type userServer struct {
+    user.UnimplementedUserServiceServer
+}
+func (s *userServer) All(ctx context.Context, req *user.GetRequest) (*user.GetResponse, error) {
+    users := []*user.User{
+        {Id: 1, Name: "Helmi", Age: 30, Location: "Kuala Lumpur", Email: "helmi@example.com"},
+        {Id: 2, Name: "Nasrul", Age: 28, Location: "Selangor", Email: "nasrul@example.com"},
+    }
+    return &user.GetResponse{Users: users}, nil
+}
 
 
 
@@ -27,7 +35,7 @@ func main(){
 	grpcServer := grpc.NewServer()
 	user.RegisterUserServiceServer(grpcServer, &userServer{})
 
-	log.Println("gRPC server running on :50051")
+	log.Println("Go service is running on :50051")
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
