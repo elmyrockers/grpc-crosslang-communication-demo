@@ -6,9 +6,9 @@ option go_package = "pb/user";
 
 service UserService {
   rpc All (GetRequest) returns (GetResponse);
-  rpc New (PostRequest) returns (PostResponse);
-  rpc Edit (PatchRequest) returns (PatchResponse);
-  rpc Delete (DeleteRequest) returns (DeleteResponse);
+  rpc New (PostRequest) returns (SuccessResponse);
+  rpc Edit (PatchRequest) returns (SuccessResponse);
+  rpc Delete (DeleteRequest) returns (SuccessResponse);
 }
 
 /* -------------------- Requests -------------------- */
@@ -41,5 +41,9 @@ message User {
 	string email = 5;
 }
 message GetResponse {
-  repeated User users = 1;
+	repeated User users = 1;
+}
+
+message SuccessResponse {
+	bool success = 1;
 }
