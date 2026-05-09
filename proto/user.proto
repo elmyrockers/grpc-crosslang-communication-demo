@@ -30,3 +30,16 @@ message PatchRequest {
 message DeleteRequest {
 	int32 id = 1;
 }
+
+/* -------------------- Responses -------------------- */
+
+message User {
+	int32 id = 1;
+	string name = 2;
+	int32 age = 3;
+	string location = 4;
+	string email = 5;
+}
+message GetResponse {
+  repeated User users = 1;
+}
