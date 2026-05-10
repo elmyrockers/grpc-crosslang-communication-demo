@@ -8,11 +8,16 @@ import (
 	"net"
 	"google.golang.org/grpc"
 	"github.com/elmyrockers/grpc-crosslang-communication-demo/grpc-servers/go-service/pb/user"
+	"database/sql"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/elmyrockers/grpc-crosslang-communication-demo/grpc-servers/go-service/db"
 )
 
 
 type userServer struct {
 	user.UnimplementedUserServiceServer
+
+	query *db.Queries
 }
 func (s *userServer) All(ctx context.Context, req *user.GetRequest) (*user.GetResponse, error) {
 	users := []*user.User{
@@ -44,16 +49,20 @@ func connectDB() *db.Queries {
 
 
 func main(){
-	lis, err := net.Listen("tcp", ":50051")
-	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
-	}
+	// Connect to DB
+		query := connectDB()
 
-	grpcServer := grpc.NewServer()
-	user.RegisterUserServiceServer(grpcServer, &userServer{})
+	// Listen to port 50051
+		lis, err := net.Listen("tcp", ":50051")
+		if err != nil {
+			log.Fatalf("failed to listen: %v", err)
+		}
 
-	log.Println("Go service is running on :50051")
-	if err := grpcServer.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
-	}
+		grpcServer := grpc.NewServer()
+		user.RegisterUserServiceServer(grpcServer, &userServer{ query:query })
+
+		log.Println("Go service is running on :50051")
+		if err := grpcServer.Serve(lis); err != nil {
+			log.Fatalf("failed to serve: %v", err)
+		}
 }
