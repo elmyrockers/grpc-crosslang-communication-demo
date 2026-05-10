@@ -5,6 +5,10 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"fmt"
 	// "github.com/davecgh/go-spew/spew"
+
+	"context"
+	// "google.golang.org/grpc"
+	"github.com/elmyrockers/grpc-crosslang-communication-demo/http-server/pb/user"
 )
 
 type User struct {
@@ -14,7 +18,9 @@ type User struct {
 	Location string `json:"location"`
 	Email string `json:"email"`
 }
-type UserController struct {}
+type UserController struct {
+	Client user.UserServiceClient
+}
 
 
 
@@ -29,10 +35,14 @@ type UserController struct {}
 
 // API routes
 	func (u *UserController) All( c *fiber.Ctx ) error {
-		return c.JSON([]User{
-			{ID: 1, Name: "Helmi Aziz", Age: 27, Location: "Kuala Lumpur", Email: "helmi@xeno.com.my"},
-			{ID: 2, Name: "Akmal Hazim", Age: 30, Location: "Alor Setar", Email: "hazim@gmail.com"},
-		})
+		response, err := u.Client.All(context.Background(), &user.GetRequest{})
+		if err != nil {
+			return c.Status(500).JSON(fiber.Map{
+				"success": false,
+				"error":   err.Error(),
+			})
+		}
+		return c.JSON( response.Users )
 	}
 
 	func (u *UserController) New( c *fiber.Ctx ) error {
