@@ -16,13 +16,13 @@ type userServer struct {
 }
 func (s *userServer) All(ctx context.Context, req *user.GetRequest) (*user.GetResponse, error) {
     users := []*user.User{
-        {Id: 1, Name: "Helmi", Age: 30, Location: "Kuala Lumpur", Email: "helmi@example.com"},
-        {Id: 2, Name: "Nasrul", Age: 28, Location: "Selangor", Email: "nasrul@example.com"},
+        {Id: 1, Name: "Helmi Aziz", Age: 27, Location: "Kuala Lumpur", Email: "helmi@xeno.com.my"},
+		{Id: 2, Name: "Akmal Hazim", Age: 30, Location: "Alor Setar", Email: "hazim@gmail.com"},
     }
     return &user.GetResponse{Users: users}, nil
 }
 func (s *userServer) New(ctx context.Context, req *user.PostRequest) (*user.SuccessResponse, error) {
-    return &user.SuccessResponse{Success: true}
+    return &user.SuccessResponse{Success: true}, nil
 }
 
 
