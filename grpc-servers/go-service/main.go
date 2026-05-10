@@ -12,20 +12,35 @@ import (
 
 
 type userServer struct {
-    user.UnimplementedUserServiceServer
+	user.UnimplementedUserServiceServer
 }
 func (s *userServer) All(ctx context.Context, req *user.GetRequest) (*user.GetResponse, error) {
-    users := []*user.User{
-        {Id: 1, Name: "Helmi Aziz", Age: 27, Location: "Kuala Lumpur", Email: "helmi@xeno.com.my"},
+	users := []*user.User{
+		{Id: 1, Name: "Helmi Aziz", Age: 27, Location: "Kuala Lumpur", Email: "helmi@xeno.com.my"},
 		{Id: 2, Name: "Akmal Hazim", Age: 30, Location: "Alor Setar", Email: "hazim@gmail.com"},
-    }
-    return &user.GetResponse{Users: users}, nil
+	}
+	return &user.GetResponse{Users: users}, nil
 }
 func (s *userServer) New(ctx context.Context, req *user.PostRequest) (*user.SuccessResponse, error) {
-    return &user.SuccessResponse{Success: true}, nil
+	return &user.SuccessResponse{Success: true}, nil
 }
 
+func connectDB() *db.Queries {
+	// Open connection pool
+		sqlDB, err := sql.Open("mysql", "root:12345@tcp(localhost:3306)/grpc-demo")
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer sqlDB.Close()
 
+	// Verify connection
+		if err = sqlDB.Ping(); err != nil {
+			log.Fatal(err)
+		}
+
+	// Wrap with sqlc, then return
+		return db.New(sqlDB)
+}
 
 
 func main(){
