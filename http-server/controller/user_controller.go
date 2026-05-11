@@ -11,13 +11,6 @@ import (
 	"github.com/elmyrockers/grpc-crosslang-communication-demo/http-server/pb/user"
 )
 
-type User struct {
-	ID    int    `json:"id"`
-	Name  string `json:"name"`
-	Age   int `json:"age"`
-	Location string `json:"location"`
-	Email string `json:"email"`
-}
 type UserController struct {
 	Client user.UserServiceClient
 }
@@ -36,6 +29,7 @@ type UserController struct {
 // API routes
 	func (u *UserController) All( c *fiber.Ctx ) error {
 		response, err := u.Client.All(context.Background(), &user.GetRequest{})
+
 		if err != nil {
 			return c.Status(500).JSON(fiber.Map{
 				"success": false,
