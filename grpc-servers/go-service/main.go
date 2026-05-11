@@ -4,7 +4,7 @@ package main
 import (
 	"github.com/davecgh/go-spew/spew"
 	_ "github.com/joho/godotenv/autoload"
-	
+
 	"context"
 	"log"
 	"os"
@@ -20,7 +20,6 @@ import (
 	"github.com/elmyrockers/grpc-crosslang-communication-demo/grpc-servers/go-service/db"
 )
 
-
 type userServer struct {
 	user.UnimplementedUserServiceServer
 
@@ -31,7 +30,6 @@ func safeString(ns sql.NullString) string {
 	if ns.Valid { return ns.String }
 	return ""
 }
-
 
 func (s *userServer) All(ctx context.Context, req *user.GetRequest) (*user.GetResponse, error) {
 	dbUsers, err := s.query.All( context.Background() )
@@ -80,7 +78,6 @@ func connectDB() (*db.Queries, *sql.DB) {
 	// Wrap with sqlc, then return
 		return db.New(sqlDB), sqlDB
 }
-
 
 func main(){
 	// Connect to DB
