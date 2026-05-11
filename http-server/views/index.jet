@@ -306,7 +306,6 @@
 					},
 					openEditModal( id ){
 						this.editUserForm = this.users[id];
-						// console.log( 'User: ', this.users[id] );
 
 						this.showEditModal = true;
 						this.$nextTick(() => {
@@ -326,6 +325,7 @@
 							try {
 								const response = await axios.get('/api/users');
 								users = response.data;
+								if ( !users ) users = [];
 							} catch (err) {
 								console.error(err);
 							}
