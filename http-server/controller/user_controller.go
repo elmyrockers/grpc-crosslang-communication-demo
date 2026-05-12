@@ -5,7 +5,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"fmt"
 	"strconv"
-	"github.com/davecgh/go-spew/spew"
+	// "github.com/davecgh/go-spew/spew"
 
 	"context"
 	// "google.golang.org/grpc"
@@ -100,7 +100,7 @@ type UserController struct {
 
 		// Make a gRPC call
 			_, err = u.Client.Edit(context.Background(), &user.PatchRequest{
-				Id: int32(payload.ID),
+				Id: int32(id),
 				Name: payload.Name,
 				Email: payload.Email,
 				Age: int32(age),
@@ -117,9 +117,23 @@ type UserController struct {
 	}
 
 	func (u *UserController) Delete( c *fiber.Ctx ) error {
-		fmt.Println( "Delete User" )
+		// Get ID
+			id := c.Params("id")
 
-		return c.JSON(fiber.Map{
-			"success": true,
-		})
+		// Convert  ID string to int
+			idInt, err := strconv.Atoi(id)
+			if err != nil {
+			    return fmt.Errorf("invalid id: %v", err)
+			}
+
+		// Make a gRPC call
+			_, err = u.Client.Delete(context.Background(), &user.DeleteRequest{ Id: int32(idInt) })
+			var errorMessage string
+			if err != nil { errorMessage = err.Error() }
+
+		// Return response
+			return c.JSON(fiber.Map{
+				"success": err==nil,
+				"error": errorMessage,
+			})
 	}
