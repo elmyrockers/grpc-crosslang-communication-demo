@@ -43,8 +43,12 @@ func main() {
 		api.Patch("/users/:id", userController.Edit )
 		api.Delete("/users/:id", userController.Delete )
 
-	log.Fatal(app.Listen(":3000"))
+	// Start server
+		err := app.Listen(":3000");
+		if  err != nil {
+			log.Fatalf("Fiber failed: %v", err)
+		}
 
-    // Close gRPC connection when the app shuts down
-    	connection.Close()
+	// Close gRPC connection when the app shuts down
+		connection.Close()
 }
