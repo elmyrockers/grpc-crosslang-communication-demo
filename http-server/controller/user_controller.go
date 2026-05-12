@@ -4,6 +4,7 @@ package controller
 import (
 	"github.com/gofiber/fiber/v2"
 	"fmt"
+	"strconv"
 	// "github.com/davecgh/go-spew/spew"
 
 	"context"
@@ -52,10 +53,26 @@ type UserController struct {
 				return err
 			}
 
+		// Convert Age string to int
+			age, err := strconv.Atoi(payload.Age)
+			if err != nil {
+			    return fmt.Errorf("invalid age: %v", err)
+			}
+
+		// Make a gRPC call
+			_, err = u.Client.New(context.Background(), &user.PostRequest{
+				Name: payload.Name,
+				Email: payload.Email,
+				Age: int32(age),
+				Location: payload.Location,
+			})
+			var errorMessage string
+			if err != nil { errorMessage = err.Error() }
+
 		// Return response
 			return c.JSON(fiber.Map{
 				"success": err==nil,
-				"payload": payload,
+				"error": errorMessage,
 			})
 	}
 
