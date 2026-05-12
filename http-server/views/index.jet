@@ -367,6 +367,8 @@
 					async editUser(){
 						this.loading = true;
 						try {
+							this.editUserForm.id = String(this.editUserForm.id) ;
+							this.editUserForm.age = String(this.editUserForm.age) ;
 							const response = await axios.patch(`/api/users/${this.editUserForm.id}`, this.editUserForm );
 							if ( response.data.success ) {
 								alert( 'Successfully edit the user!' );
