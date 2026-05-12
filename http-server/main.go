@@ -19,10 +19,11 @@ func main() {
 		if err != nil {
 			log.Fatalf("did not connect: %v", err)
 		}
+		defer connection.Close()
 	
 	// Set gRPC Client as UserController attribute
 		client := user.NewUserServiceClient(connection)
-		userController := controller.UserController{ Client: client }
+		userController := &controller.UserController{ Client: client }
 
 	// Create app with Jet template engine
 		engine := jet.New("./views", ".jet")
@@ -44,11 +45,8 @@ func main() {
 		api.Delete("/users/:id", userController.Delete )
 
 	// Start server
-		err := app.Listen(":3000");
+		err = app.Listen(":3000");
 		if  err != nil {
 			log.Fatalf("Fiber failed: %v", err)
 		}
-
-	// Close gRPC connection when the app shuts down
-		connection.Close()
 }
