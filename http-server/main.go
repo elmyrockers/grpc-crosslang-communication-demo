@@ -19,7 +19,6 @@ func main() {
 		if err != nil {
 			log.Fatalf("did not connect: %v", err)
 		}
-		defer connection.Close()
 	
 	// Set gRPC Client as UserController attribute
 		client := user.NewUserServiceClient(connection)
@@ -45,4 +44,7 @@ func main() {
 		api.Delete("/users/:id", userController.Delete )
 
 	log.Fatal(app.Listen(":3000"))
+
+    // Close gRPC connection when the app shuts down
+    	connection.Close()
 }
