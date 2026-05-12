@@ -120,7 +120,7 @@ type UserController struct {
 		// Get ID
 			id := c.Params("id")
 
-		// Convert  ID string to int
+		// Convert ID string to int
 			idInt, err := strconv.Atoi(id)
 			if err != nil {
 			    return fmt.Errorf("invalid id: %v", err)
