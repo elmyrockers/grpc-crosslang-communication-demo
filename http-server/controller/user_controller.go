@@ -5,7 +5,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"fmt"
 	"strconv"
-	// "github.com/davecgh/go-spew/spew"
+	"github.com/davecgh/go-spew/spew"
 
 	"context"
 	// "google.golang.org/grpc"
@@ -77,11 +77,43 @@ type UserController struct {
 	}
 
 	func (u *UserController) Edit( c *fiber.Ctx ) error {
-		fmt.Println( "Edit User" )
+		// Get form values
+			payload := struct {
+				ID  string `json:"id"`
+				Name  string `json:"name"`
+				Email string `json:"email"`
+				Age string `json:"age"`
+				Location string `json:"location"`
+			}{}
+			err := c.BodyParser(&payload);
+			if err != nil { return err }
 
-		return c.JSON(fiber.Map{
-			"success": true,
-		})
+		// Convert Age and ID string to int
+			id, err := strconv.Atoi(payload.ID)
+			if err != nil {
+			    return fmt.Errorf("invalid id: %v", err)
+			}
+			age, err := strconv.Atoi(payload.Age)
+			if err != nil {
+			    return fmt.Errorf("invalid age: %v", err)
+			}
+
+		// Make a gRPC call
+			_, err = u.Client.Edit(context.Background(), &user.PatchRequest{
+				Id: int32(payload.ID),
+				Name: payload.Name,
+				Email: payload.Email,
+				Age: int32(age),
+				Location: payload.Location,
+			})
+			var errorMessage string
+			if err != nil { errorMessage = err.Error() }
+
+		// Return response
+			return c.JSON(fiber.Map{
+				"success": err==nil,
+				"error": errorMessage,
+			})
 	}
 
 	func (u *UserController) Delete( c *fiber.Ctx ) error {
