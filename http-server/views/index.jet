@@ -331,9 +331,11 @@
 							}
 
 						// Re-map
+							this.users = [];
 							for( let user of users ){
 								this.users[ user.id ] = user;
 							}
+						console.log( 'New:', users, 'Old:', this.users )
 
 						this.loading = false;
 					},
