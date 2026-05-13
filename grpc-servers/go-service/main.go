@@ -2,7 +2,7 @@ package main
 
 
 import (
-	"github.com/davecgh/go-spew/spew"
+	// "github.com/davecgh/go-spew/spew"
 	_ "github.com/joho/godotenv/autoload"
 
 	"context"
@@ -87,6 +87,12 @@ func (s *userServer) Edit(ctx context.Context, req *user.PatchRequest) (*user.Su
 	return &user.SuccessResponse{Success: true}, nil
 }
 func (s *userServer) Delete(ctx context.Context, req *user.DeleteRequest) (*user.SuccessResponse, error) {
+	// Delete user
+		err := s.query.Delete( context.Background(), req.Id )
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "failed to delete user: %v", err)
+		}
+	return &user.SuccessResponse{Success: true}, nil
 }
 
 func connectDB() (*db.Queries, *sql.DB) {
