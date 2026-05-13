@@ -2,7 +2,7 @@ package main
 
 
 import (
-	// "github.com/davecgh/go-spew/spew"
+	"github.com/davecgh/go-spew/spew"
 	_ "github.com/joho/godotenv/autoload"
 
 	"context"
@@ -64,6 +64,24 @@ func (s *userServer) New(ctx context.Context, req *user.PostRequest) (*user.Succ
 		err := s.query.New( context.Background(), params )
 		if err != nil {
 			return nil, status.Errorf(codes.Internal, "failed to add new user: %v", err)
+		}
+
+	return &user.SuccessResponse{Success: true}, nil
+}
+func (s *userServer) Edit(ctx context.Context, req *user.PatchRequest) (*user.SuccessResponse, error) {
+	// Prepare params
+		params := db.EditParams{
+			ID: 		req.Id,
+			Name: 		req.Name,
+			Age: 		req.Age,
+			Location: 	sql.NullString{String: req.Location, Valid: req.Location != ""},
+			Email: 		sql.NullString{String: req.Email, Valid: req.Email != ""},
+		}
+
+	// Save user details
+		err := s.query.Edit( context.Background(), params )
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "failed to edit user: %v", err)
 		}
 
 	return &user.SuccessResponse{Success: true}, nil
