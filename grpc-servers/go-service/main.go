@@ -86,6 +86,8 @@ func (s *userServer) Edit(ctx context.Context, req *user.PatchRequest) (*user.Su
 
 	return &user.SuccessResponse{Success: true}, nil
 }
+func (s *userServer) Delete(ctx context.Context, req *user.DeleteRequest) (*user.SuccessResponse, error) {
+}
 
 func connectDB() (*db.Queries, *sql.DB) {
 	// Load configs
