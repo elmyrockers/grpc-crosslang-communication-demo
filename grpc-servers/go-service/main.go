@@ -52,6 +52,20 @@ func (s *userServer) All(ctx context.Context, req *user.GetRequest) (*user.GetRe
 	return &user.GetResponse{Users: pbUsers}, nil
 }
 func (s *userServer) New(ctx context.Context, req *user.PostRequest) (*user.SuccessResponse, error) {
+	// Prepare params
+		params := db.NewParams{
+			Name:     req.Name,
+			Age:      req.Age,
+			Location: sql.NullString{String: req.Location, Valid: req.Location != ""},
+			Email:    sql.NullString{String: req.Email, Valid: req.Email != ""},
+		}
+
+	// Add new user
+		err := s.query.New( context.Background(), params )
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "failed to add new user: %v", err)
+		}
+
 	return &user.SuccessResponse{Success: true}, nil
 }
 
