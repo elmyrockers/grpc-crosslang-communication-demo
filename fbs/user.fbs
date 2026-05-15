@@ -1,0 +1,42 @@
+namespace user;
+
+// Requests
+	table GetRequest {}
+
+	table PostRequest {
+		name: string;
+		age: int;
+		location: string;
+		email: string;
+	}
+
+	table PatchRequest {
+		id: int;
+		name: string;
+		age: int;
+		location: string;
+		email: string;
+	}
+
+	table DeleteRequest {
+		id: int;
+	}
+
+// Responses
+	table User {
+		id: int;
+		name: string;
+		age: int;
+		location: string;
+		email: string;
+	}
+
+	table GetResponse {
+		users: [User];
+	}
+
+	table SuccessResponse {
+		success: bool;
+	}
+
+	root_type GetResponse;
