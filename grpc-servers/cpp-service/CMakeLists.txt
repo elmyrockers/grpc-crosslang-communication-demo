@@ -18,9 +18,13 @@ project(cpp-service LANGUAGES CXX)
 	)
 
 
-# For debugging purpose - dbg-macro
+
+
+# For debugging purpose - dbg-macro and boost-pfr
 	find_path(DBG_MACRO_INCLUDE_DIRS "dbg-macro/dbg.h")
 	target_include_directories(cpp-service PRIVATE ${DBG_MACRO_INCLUDE_DIRS})
+	find_package(Boost REQUIRED COMPONENTS pfr)
+	target_link_libraries(cpp-service PRIVATE Boost::pfr)
 
 
 set_target_properties(cpp-service PROPERTIES OUTPUT_NAME "app")
