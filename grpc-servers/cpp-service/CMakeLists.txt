@@ -10,7 +10,7 @@ project(cpp-service LANGUAGES CXX)
 				src/main.cpp
 			PUBLIC
 				FILE_SET CXX_MODULES FILES
-					src/user.cppm
+					src/grpc.service.cppm
 		)
 	target_include_directories(cpp-service
 		PUBLIC 
