@@ -23,11 +23,4 @@ project(cpp-service LANGUAGES CXX)
 
 
 
-
-
-
-
-
-
-
 set_target_properties(cpp-service PROPERTIES OUTPUT_NAME "app")
