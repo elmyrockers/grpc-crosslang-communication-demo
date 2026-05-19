@@ -2,9 +2,10 @@
   "name": "cpp-service",
   "version": "0.1.0",
   "dependencies": [
+    "dbg-macro",
     "flatbuffers",
     "grpc",
     "protobuf",
-    "dbg-macro"
+    "boost-pfr"
   ]
 }
