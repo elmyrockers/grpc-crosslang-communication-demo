@@ -12,7 +12,7 @@ project(cpp-service LANGUAGES CXX)
 				FILE_SET CXX_MODULES FILES
 					src/user.cppm
 		)
-	target_include_directories(test
+	target_include_directories(cpp-service
 		PUBLIC 
 			${CMAKE_CURRENT_SOURCE_DIR}/src
 	)
@@ -30,4 +30,4 @@ project(cpp-service LANGUAGES CXX)
 
 
 
-set_target_properties(test PROPERTIES OUTPUT_NAME "app")
+set_target_properties(cpp-service PROPERTIES OUTPUT_NAME "app")
