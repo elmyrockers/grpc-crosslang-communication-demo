@@ -20,16 +20,14 @@ project(cpp-service LANGUAGES CXX)
 
 
 # gRPC libraries - include protobuf and flatbuffers
-	find_package(gRPC CONFIG REQUIRED)
-	target_link_libraries(cpp-service PRIVATE gRPC::gpr gRPC::grpc gRPC::grpc++ gRPC::grpc++_alts)
-	find_package(protobuf CONFIG REQUIRED)
-	target_link_libraries(cpp-service PRIVATE protobuf::libupb protobuf::libprotoc protobuf::libprotobuf protobuf::libprotobuf-lite)
-	find_package(flatbuffers CONFIG REQUIRED)
-	target_link_libraries(cpp-service PRIVATE flatbuffers::flatbuffers)
+	# find_package(gRPC CONFIG REQUIRED)
+	# target_link_libraries(cpp-service PRIVATE gRPC::gpr gRPC::grpc gRPC::grpc++ gRPC::grpc++_alts)
+	# find_package(protobuf CONFIG REQUIRED)
+	# target_link_libraries(cpp-service PRIVATE protobuf::libupb protobuf::libprotoc protobuf::libprotobuf protobuf::libprotobuf-lite)
+	# find_package(flatbuffers CONFIG REQUIRED)
+	# target_link_libraries(cpp-service PRIVATE flatbuffers::flatbuffers)
 
-# For debugging purpose - dbg-macro and boost-pfr
-	find_path(DBG_MACRO_INCLUDE_DIRS "dbg-macro/dbg.h")
-	target_include_directories(cpp-service PRIVATE ${DBG_MACRO_INCLUDE_DIRS})
+# For debugging purpose - boost-pfr
 	find_package(Boost REQUIRED COMPONENTS pfr)
 	target_link_libraries(cpp-service PRIVATE Boost::pfr)
 
