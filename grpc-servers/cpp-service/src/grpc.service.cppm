@@ -1,16 +1,38 @@
 module;
-#include <print>
+// #include <print>
+#include <grpcpp/grpcpp.h>
+#include "user.pb.h"
+#include "user.grpc.pb.h"
 
 export module grpc.service;
 
-export class UserServer
+export class UserServer final : public user::UserService::Service
 {
 public:
 	UserServer(){
 		std::print( "UserServer dilaksanakan!" );
 	}
-	~UserServer(){
 
-	}
+	// rpc All (GetRequest) returns (GetResponse);
+    grpc::Status All(grpc::ServerContext* context, const user::GetRequest* request, user::GetResponse* response) override
+    {
+        user::User* u1 = response->add_users();
+        u1->set_id(1);
+        u1->set_name("Ahmad");
+        u1->set_age(30);
+        u1->set_location("Kuala Lumpur");
+        u1->set_email("ahmad@gmail.com");
+
+        user::User* u2 = response->add_users();
+        u2->set_id(2);
+        u2->set_name("Siti");
+        u2->set_age(25);
+        u2->set_location("Alor Setar");
+        u2->set_email("siti@gmail.com");
+
+        return grpc::Status::OK;
+    }
+
+	~UserServer(){}
 	
 };
