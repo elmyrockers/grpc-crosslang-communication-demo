@@ -6,15 +6,19 @@ project(cpp-service LANGUAGES CXX)
 	add_executable(cpp-service)
 	target_compile_features(cpp-service PRIVATE cxx_std_23)
 	target_sources(cpp-service
-			PRIVATE
-				src/main.cpp
-			PUBLIC
-				FILE_SET CXX_MODULES FILES
-					src/grpc.service.cppm
-		)
+		PRIVATE
+			src/main.cpp
+			pb/user.grpc.pb.cc
+			pb/user.pb.cc
+		PRIVATE FILE_SET CXX_MODULES
+		BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/src
+		FILES
+			src/grpc.service.cppm
+	)
 	target_include_directories(cpp-service
 		PUBLIC 
 			${CMAKE_CURRENT_SOURCE_DIR}/src
+			${CMAKE_CURRENT_SOURCE_DIR}/pb
 	)
 
 
