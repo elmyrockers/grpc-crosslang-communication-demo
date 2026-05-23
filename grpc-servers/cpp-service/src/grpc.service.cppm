@@ -4,6 +4,7 @@ module;
 #include <grpcpp/grpcpp.h>
 #include "user.pb.h"
 #include "user.grpc.pb.h"
+#include "user_generated.h"
 
 // #include "boost/pfr.hpp"
 
