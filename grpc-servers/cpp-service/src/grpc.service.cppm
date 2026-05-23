@@ -49,8 +49,7 @@ public:
 				auto name = mb.CreateString( request->name() );
 				auto location = mb.CreateString( request->location() );
 				auto email = mb.CreateString( request->email() );
-				auto age = mb.CreateString( request->age() );
-				auto fbRequest = user_fb::CreatePostRequest(mb, name, age, location, email );
+				auto fbRequest = user_fb::CreatePostRequest(mb, name, request->age(), location, email );
 				mb.Finish(fbRequest);
 
 			// Send a request to rust-service
