@@ -40,3 +40,11 @@ namespace user_fb;
 	}
 
 	root_type GetResponse;
+
+// Service
+	rpc_service UserService {
+		All(GetRequest): GetResponse;
+		New(PostRequest): SuccessResponse;
+		Edit(PatchRequest): SuccessResponse;
+		Delete(DeleteRequest): SuccessResponse;
+	}
