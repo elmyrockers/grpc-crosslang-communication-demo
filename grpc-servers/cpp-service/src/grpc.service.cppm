@@ -6,6 +6,7 @@ module;
 #include "user.pb.h"
 #include "user.grpc.pb.h"
 #include "user_generated.h"
+#include "user.grpc.fb.h"
 
 // #include "boost/pfr.hpp"
 
@@ -42,7 +43,23 @@ public:
 	{
 		std::print( stderr, "\n\nName: {}\nEmail: {}\nAge: {}\nLocation: {}", request->name(), request->email(), request->age(), request->location());
 
-		flatbuffers::grpc::MessageBuilder mb;
+		// gRPC request with flatbuffers
+			// Create a request with flatbuffers
+				flatbuffers::grpc::MessageBuilder mb;
+				auto name = mb.CreateString("Mohd Helmi");
+				auto location = mb.CreateString("Kuala Lumpur");
+				auto email = mb.CreateString("elmyrockers@gmail.com");
+				auto fbRequest = user_fb::CreatePostRequest(mb, name, 32, location, email );
+				mb.Finish(fbRequest);
+
+			// Send a request to rust-service
+				auto channel = grpc::CreateChannel("localhost:50052", grpc::InsecureChannelCredentials());
+				auto stub = user_fb::UserService::NewStub(channel);
+
+				grpc::ClientContext clientContext;
+				auto requestMessage = mb.ReleaseMessage<user_fb::PostRequest>();
+				flatbuffers::grpc::Message<user_fb::SuccessResponse> responseMessage;
+				grpc::Status status = stub->New(&clientContext, requestMessage, &responseMessage);
 
 
 		return grpc::Status::OK;
