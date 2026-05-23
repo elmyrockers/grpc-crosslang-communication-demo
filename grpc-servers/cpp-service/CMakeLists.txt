@@ -19,6 +19,7 @@ project(cpp-service LANGUAGES CXX)
 		PUBLIC 
 			${CMAKE_CURRENT_SOURCE_DIR}/src
 			${CMAKE_CURRENT_SOURCE_DIR}/pb
+			${CMAKE_CURRENT_SOURCE_DIR}/fbs
 	)
 
 
