@@ -2,6 +2,7 @@ module;
 #include <string>
 #include <print>
 #include <grpcpp/grpcpp.h>
+#include <flatbuffers/grpc.h>
 #include "user.pb.h"
 #include "user.grpc.pb.h"
 #include "user_generated.h"
@@ -40,6 +41,9 @@ public:
 	grpc::Status New(grpc::ServerContext* context, const user::PostRequest* request, user::SuccessResponse* response) override
 	{
 		std::print( stderr, "\n\nName: {}\nEmail: {}\nAge: {}\nLocation: {}", request->name(), request->email(), request->age(), request->location());
+
+		flatbuffers::grpc::MessageBuilder mb;
+
 
 		return grpc::Status::OK;
 	}
