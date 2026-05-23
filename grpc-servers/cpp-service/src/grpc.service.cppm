@@ -43,5 +43,12 @@ public:
 		return grpc::Status::OK;
 	}
 
+	grpc::Status Edit(grpc::ServerContext* context, const user::PatchRequest* request, user::SuccessResponse* response) override
+	{
+		std::print( stderr, "\n\nID: {}\nName: {}\nEmail: {}\nAge: {}\nLocation: {}", request->id(), request->name(), request->email(), request->age(), request->location());
+
+		return grpc::Status::OK;
+	}
+
 	~UserServer(){}
 };
