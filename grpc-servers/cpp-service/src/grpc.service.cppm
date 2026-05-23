@@ -46,10 +46,11 @@ public:
 		// gRPC request with flatbuffers
 			// Create a request with flatbuffers
 				flatbuffers::grpc::MessageBuilder mb;
-				auto name = mb.CreateString("Mohd Helmi");
-				auto location = mb.CreateString("Kuala Lumpur");
-				auto email = mb.CreateString("elmyrockers@gmail.com");
-				auto fbRequest = user_fb::CreatePostRequest(mb, name, 32, location, email );
+				auto name = mb.CreateString( request->name() );
+				auto location = mb.CreateString( request->location() );
+				auto email = mb.CreateString( request->email() );
+				auto age = mb.CreateString( request->age() );
+				auto fbRequest = user_fb::CreatePostRequest(mb, name, age, location, email );
 				mb.Finish(fbRequest);
 
 			// Send a request to rust-service
@@ -61,6 +62,13 @@ public:
 				flatbuffers::grpc::Message<user_fb::SuccessResponse> responseMessage;
 				grpc::Status status = stub->New(&clientContext, requestMessage, &responseMessage);
 
+			// Send response back to http-server
+				bool isOK = false;
+				if (status.ok()) {
+					const user_fb::SuccessResponse* fbResponse = responseMessage.GetRoot();
+					isOK = fbResponse->success();
+				}
+				response->set_success( isOK );
 
 		return grpc::Status::OK;
 	}
