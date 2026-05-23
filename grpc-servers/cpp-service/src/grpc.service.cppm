@@ -50,5 +50,12 @@ public:
 		return grpc::Status::OK;
 	}
 
+	grpc::Status Delete(grpc::ServerContext* context, const user::DeleteRequest* request, user::SuccessResponse* response) override
+	{
+		std::print( stderr, "\n\nID: {}", request->id());
+
+		return grpc::Status::OK;
+	}
+
 	~UserServer(){}
 };
