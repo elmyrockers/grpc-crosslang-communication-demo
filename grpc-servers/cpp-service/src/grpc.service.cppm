@@ -27,6 +27,19 @@ public:
 	grpc::Status All(grpc::ServerContext* context, const user::GetRequest* request, user::GetResponse* response) override
 	{
 		// Send Get Request with flatbuffers
+			// Prepare payload
+				flatbuffers::grpc::MessageBuilder mb;
+				auto fbRequest = user_fb::CreateGetRequest(mb);
+				mb.Finish(fbRequest);
+
+			// Send a request
+				grpc::ClientContext clientContext;
+				auto requestMessage = mb.ReleaseMessage<user_fb::GetRequest>();
+				flatbuffers::grpc::Message<user_fb::GetResponse> responseMessage;
+				grpc::Status status = this->stub->All(&clientContext, requestMessage, &responseMessage);
+
+
+
 			user::User* u1 = response->add_users();
 			u1->set_id(1);
 			u1->set_name("Ahmad");
