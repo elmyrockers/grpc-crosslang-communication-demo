@@ -5,7 +5,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"fmt"
 	"strconv"
-	// "github.com/davecgh/go-spew/spew"
+	"github.com/davecgh/go-spew/spew"
 
 	"context"
 	// "google.golang.org/grpc"
@@ -60,18 +60,21 @@ type UserController struct {
 			}
 
 		// Make a gRPC call
-			_, err = u.Client.New(context.Background(), &user.PostRequest{
+			response, err := u.Client.New(context.Background(), &user.PostRequest{
 				Name: payload.Name,
 				Email: payload.Email,
 				Age: int32(age),
 				Location: payload.Location,
 			})
+
 			var errorMessage string
 			if err != nil { errorMessage = err.Error() }
+			
+			// spew.Dump( payload, response.GetSuccess(), errorMessage )
 
 		// Return response
 			return c.JSON(fiber.Map{
-				"success": err==nil,
+				"success": response.GetSuccess(),
 				"error": errorMessage,
 			})
 	}
