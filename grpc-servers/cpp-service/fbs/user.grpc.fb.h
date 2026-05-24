@@ -34,12 +34,12 @@ class UserService final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
-    virtual ::grpc::Status Get(::grpc::ClientContext* context, const flatbuffers::grpc::Message<GetRequest>& request, flatbuffers::grpc::Message<GetResponse>* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<GetResponse>>> AsyncGet(::grpc::ClientContext* context, const flatbuffers::grpc::Message<GetRequest>& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<GetResponse>>>(AsyncGetRaw(context, request, cq));
+    virtual ::grpc::Status All(::grpc::ClientContext* context, const flatbuffers::grpc::Message<GetRequest>& request, flatbuffers::grpc::Message<GetResponse>* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<GetResponse>>> AsyncAll(::grpc::ClientContext* context, const flatbuffers::grpc::Message<GetRequest>& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<GetResponse>>>(AsyncAllRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<GetResponse>>> PrepareAsyncGet(::grpc::ClientContext* context, const flatbuffers::grpc::Message<GetRequest>& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<GetResponse>>>(PrepareAsyncGetRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<GetResponse>>> PrepareAsyncAll(::grpc::ClientContext* context, const flatbuffers::grpc::Message<GetRequest>& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<GetResponse>>>(PrepareAsyncAllRaw(context, request, cq));
     }
     virtual ::grpc::Status New(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PostRequest>& request, flatbuffers::grpc::Message<SuccessResponse>* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<SuccessResponse>>> AsyncNew(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PostRequest>& request, ::grpc::CompletionQueue* cq) {
@@ -48,12 +48,12 @@ class UserService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<SuccessResponse>>> PrepareAsyncNew(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PostRequest>& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<SuccessResponse>>>(PrepareAsyncNewRaw(context, request, cq));
     }
-    virtual ::grpc::Status Update(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PatchRequest>& request, flatbuffers::grpc::Message<SuccessResponse>* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<SuccessResponse>>> AsyncUpdate(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PatchRequest>& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<SuccessResponse>>>(AsyncUpdateRaw(context, request, cq));
+    virtual ::grpc::Status Edit(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PatchRequest>& request, flatbuffers::grpc::Message<SuccessResponse>* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<SuccessResponse>>> AsyncEdit(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PatchRequest>& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<SuccessResponse>>>(AsyncEditRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<SuccessResponse>>> PrepareAsyncUpdate(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PatchRequest>& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<SuccessResponse>>>(PrepareAsyncUpdateRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<SuccessResponse>>> PrepareAsyncEdit(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PatchRequest>& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<SuccessResponse>>>(PrepareAsyncEditRaw(context, request, cq));
     }
     virtual ::grpc::Status Delete(::grpc::ClientContext* context, const flatbuffers::grpc::Message<DeleteRequest>& request, flatbuffers::grpc::Message<SuccessResponse>* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<SuccessResponse>>> AsyncDelete(::grpc::ClientContext* context, const flatbuffers::grpc::Message<DeleteRequest>& request, ::grpc::CompletionQueue* cq) {
@@ -63,24 +63,24 @@ class UserService final {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<SuccessResponse>>>(PrepareAsyncDeleteRaw(context, request, cq));
     }
   private:
-    virtual ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<GetResponse>>* AsyncGetRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<GetRequest>& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<GetResponse>>* PrepareAsyncGetRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<GetRequest>& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<GetResponse>>* AsyncAllRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<GetRequest>& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<GetResponse>>* PrepareAsyncAllRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<GetRequest>& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<SuccessResponse>>* AsyncNewRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PostRequest>& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<SuccessResponse>>* PrepareAsyncNewRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PostRequest>& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<SuccessResponse>>* AsyncUpdateRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PatchRequest>& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<SuccessResponse>>* PrepareAsyncUpdateRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PatchRequest>& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<SuccessResponse>>* AsyncEditRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PatchRequest>& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<SuccessResponse>>* PrepareAsyncEditRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PatchRequest>& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<SuccessResponse>>* AsyncDeleteRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<DeleteRequest>& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< flatbuffers::grpc::Message<SuccessResponse>>* PrepareAsyncDeleteRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<DeleteRequest>& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
     Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel);
-    ::grpc::Status Get(::grpc::ClientContext* context, const flatbuffers::grpc::Message<GetRequest>& request, flatbuffers::grpc::Message<GetResponse>* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<GetResponse>>> AsyncGet(::grpc::ClientContext* context, const flatbuffers::grpc::Message<GetRequest>& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<GetResponse>>>(AsyncGetRaw(context, request, cq));
+    ::grpc::Status All(::grpc::ClientContext* context, const flatbuffers::grpc::Message<GetRequest>& request, flatbuffers::grpc::Message<GetResponse>* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<GetResponse>>> AsyncAll(::grpc::ClientContext* context, const flatbuffers::grpc::Message<GetRequest>& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<GetResponse>>>(AsyncAllRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<GetResponse>>> PrepareAsyncGet(::grpc::ClientContext* context, const flatbuffers::grpc::Message<GetRequest>& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<GetResponse>>>(PrepareAsyncGetRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<GetResponse>>> PrepareAsyncAll(::grpc::ClientContext* context, const flatbuffers::grpc::Message<GetRequest>& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<GetResponse>>>(PrepareAsyncAllRaw(context, request, cq));
     }
     ::grpc::Status New(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PostRequest>& request, flatbuffers::grpc::Message<SuccessResponse>* response) override;
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>> AsyncNew(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PostRequest>& request, ::grpc::CompletionQueue* cq) {
@@ -89,12 +89,12 @@ class UserService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>> PrepareAsyncNew(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PostRequest>& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>>(PrepareAsyncNewRaw(context, request, cq));
     }
-    ::grpc::Status Update(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PatchRequest>& request, flatbuffers::grpc::Message<SuccessResponse>* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>> AsyncUpdate(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PatchRequest>& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>>(AsyncUpdateRaw(context, request, cq));
+    ::grpc::Status Edit(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PatchRequest>& request, flatbuffers::grpc::Message<SuccessResponse>* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>> AsyncEdit(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PatchRequest>& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>>(AsyncEditRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>> PrepareAsyncUpdate(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PatchRequest>& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>>(PrepareAsyncUpdateRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>> PrepareAsyncEdit(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PatchRequest>& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>>(PrepareAsyncEditRaw(context, request, cq));
     }
     ::grpc::Status Delete(::grpc::ClientContext* context, const flatbuffers::grpc::Message<DeleteRequest>& request, flatbuffers::grpc::Message<SuccessResponse>* response) override;
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>> AsyncDelete(::grpc::ClientContext* context, const flatbuffers::grpc::Message<DeleteRequest>& request, ::grpc::CompletionQueue* cq) {
@@ -106,17 +106,17 @@ class UserService final {
   
    private:
     std::shared_ptr< ::grpc::ChannelInterface> channel_;
-    ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<GetResponse>>* AsyncGetRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<GetRequest>& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<GetResponse>>* PrepareAsyncGetRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<GetRequest>& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<GetResponse>>* AsyncAllRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<GetRequest>& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<GetResponse>>* PrepareAsyncAllRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<GetRequest>& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>* AsyncNewRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PostRequest>& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>* PrepareAsyncNewRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PostRequest>& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>* AsyncUpdateRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PatchRequest>& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>* PrepareAsyncUpdateRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PatchRequest>& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>* AsyncEditRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PatchRequest>& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>* PrepareAsyncEditRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PatchRequest>& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>* AsyncDeleteRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<DeleteRequest>& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>* PrepareAsyncDeleteRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<DeleteRequest>& request, ::grpc::CompletionQueue* cq) override;
-    const ::grpc::internal::RpcMethod rpcmethod_Get_;
+    const ::grpc::internal::RpcMethod rpcmethod_All_;
     const ::grpc::internal::RpcMethod rpcmethod_New_;
-    const ::grpc::internal::RpcMethod rpcmethod_Update_;
+    const ::grpc::internal::RpcMethod rpcmethod_Edit_;
     const ::grpc::internal::RpcMethod rpcmethod_Delete_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
@@ -125,28 +125,28 @@ class UserService final {
    public:
     Service();
     virtual ~Service();
-    virtual ::grpc::Status Get(::grpc::ServerContext* context, const flatbuffers::grpc::Message<GetRequest>* request, flatbuffers::grpc::Message<GetResponse>* response);
+    virtual ::grpc::Status All(::grpc::ServerContext* context, const flatbuffers::grpc::Message<GetRequest>* request, flatbuffers::grpc::Message<GetResponse>* response);
     virtual ::grpc::Status New(::grpc::ServerContext* context, const flatbuffers::grpc::Message<PostRequest>* request, flatbuffers::grpc::Message<SuccessResponse>* response);
-    virtual ::grpc::Status Update(::grpc::ServerContext* context, const flatbuffers::grpc::Message<PatchRequest>* request, flatbuffers::grpc::Message<SuccessResponse>* response);
+    virtual ::grpc::Status Edit(::grpc::ServerContext* context, const flatbuffers::grpc::Message<PatchRequest>* request, flatbuffers::grpc::Message<SuccessResponse>* response);
     virtual ::grpc::Status Delete(::grpc::ServerContext* context, const flatbuffers::grpc::Message<DeleteRequest>* request, flatbuffers::grpc::Message<SuccessResponse>* response);
   };
   template <class BaseClass>
-  class WithAsyncMethod_Get : public BaseClass {
+  class WithAsyncMethod_All : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service */*service*/) {}
    public:
-    WithAsyncMethod_Get() {
+    WithAsyncMethod_All() {
       ::grpc::Service::MarkMethodAsync(0);
     }
-    ~WithAsyncMethod_Get() override {
+    ~WithAsyncMethod_All() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status Get(::grpc::ServerContext* /*context*/, const flatbuffers::grpc::Message<GetRequest>* /*request*/, flatbuffers::grpc::Message<GetResponse>* /*response*/) final override {
+    ::grpc::Status All(::grpc::ServerContext* /*context*/, const flatbuffers::grpc::Message<GetRequest>* /*request*/, flatbuffers::grpc::Message<GetResponse>* /*response*/) final override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestGet(::grpc::ServerContext* context, flatbuffers::grpc::Message<GetRequest>* request, ::grpc::ServerAsyncResponseWriter< flatbuffers::grpc::Message<GetResponse>>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestAll(::grpc::ServerContext* context, flatbuffers::grpc::Message<GetRequest>* request, ::grpc::ServerAsyncResponseWriter< flatbuffers::grpc::Message<GetResponse>>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -171,22 +171,22 @@ class UserService final {
     }
   };
   template <class BaseClass>
-  class WithAsyncMethod_Update : public BaseClass {
+  class WithAsyncMethod_Edit : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service */*service*/) {}
    public:
-    WithAsyncMethod_Update() {
+    WithAsyncMethod_Edit() {
       ::grpc::Service::MarkMethodAsync(2);
     }
-    ~WithAsyncMethod_Update() override {
+    ~WithAsyncMethod_Edit() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status Update(::grpc::ServerContext* /*context*/, const flatbuffers::grpc::Message<PatchRequest>* /*request*/, flatbuffers::grpc::Message<SuccessResponse>* /*response*/) final override {
+    ::grpc::Status Edit(::grpc::ServerContext* /*context*/, const flatbuffers::grpc::Message<PatchRequest>* /*request*/, flatbuffers::grpc::Message<SuccessResponse>* /*response*/) final override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestUpdate(::grpc::ServerContext* context, flatbuffers::grpc::Message<PatchRequest>* request, ::grpc::ServerAsyncResponseWriter< flatbuffers::grpc::Message<SuccessResponse>>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestEdit(::grpc::ServerContext* context, flatbuffers::grpc::Message<PatchRequest>* request, ::grpc::ServerAsyncResponseWriter< flatbuffers::grpc::Message<SuccessResponse>>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -210,20 +210,20 @@ class UserService final {
       ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef   WithAsyncMethod_Get<  WithAsyncMethod_New<  WithAsyncMethod_Update<  WithAsyncMethod_Delete<  Service   >   >   >   >   AsyncService;
+  typedef   WithAsyncMethod_All<  WithAsyncMethod_New<  WithAsyncMethod_Edit<  WithAsyncMethod_Delete<  Service   >   >   >   >   AsyncService;
   template <class BaseClass>
-  class WithGenericMethod_Get : public BaseClass {
+  class WithGenericMethod_All : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service */*service*/) {}
    public:
-    WithGenericMethod_Get() {
+    WithGenericMethod_All() {
       ::grpc::Service::MarkMethodGeneric(0);
     }
-    ~WithGenericMethod_Get() override {
+    ~WithGenericMethod_All() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status Get(::grpc::ServerContext* /*context*/, const flatbuffers::grpc::Message<GetRequest>* /*request*/, flatbuffers::grpc::Message<GetResponse>* /*response*/) final override {
+    ::grpc::Status All(::grpc::ServerContext* /*context*/, const flatbuffers::grpc::Message<GetRequest>* /*request*/, flatbuffers::grpc::Message<GetResponse>* /*response*/) final override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -246,18 +246,18 @@ class UserService final {
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_Update : public BaseClass {
+  class WithGenericMethod_Edit : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service */*service*/) {}
    public:
-    WithGenericMethod_Update() {
+    WithGenericMethod_Edit() {
       ::grpc::Service::MarkMethodGeneric(2);
     }
-    ~WithGenericMethod_Update() override {
+    ~WithGenericMethod_Edit() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status Update(::grpc::ServerContext* /*context*/, const flatbuffers::grpc::Message<PatchRequest>* /*request*/, flatbuffers::grpc::Message<SuccessResponse>* /*response*/) final override {
+    ::grpc::Status Edit(::grpc::ServerContext* /*context*/, const flatbuffers::grpc::Message<PatchRequest>* /*request*/, flatbuffers::grpc::Message<SuccessResponse>* /*response*/) final override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -280,24 +280,24 @@ class UserService final {
     }
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_Get : public BaseClass {
+  class WithStreamedUnaryMethod_All : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service */*service*/) {}
    public:
-    WithStreamedUnaryMethod_Get() {
+    WithStreamedUnaryMethod_All() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::internal::StreamedUnaryHandler< flatbuffers::grpc::Message<GetRequest>, flatbuffers::grpc::Message<GetResponse>>(std::bind(&WithStreamedUnaryMethod_Get<BaseClass>::StreamedGet, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler< flatbuffers::grpc::Message<GetRequest>, flatbuffers::grpc::Message<GetResponse>>(std::bind(&WithStreamedUnaryMethod_All<BaseClass>::StreamedAll, this, std::placeholders::_1, std::placeholders::_2)));
     }
-    ~WithStreamedUnaryMethod_Get() override {
+    ~WithStreamedUnaryMethod_All() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status Get(::grpc::ServerContext* /*context*/, const flatbuffers::grpc::Message<GetRequest>* /*request*/, flatbuffers::grpc::Message<GetResponse>* /*response*/) final override {
+    ::grpc::Status All(::grpc::ServerContext* /*context*/, const flatbuffers::grpc::Message<GetRequest>* /*request*/, flatbuffers::grpc::Message<GetResponse>* /*response*/) final override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedGet(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< flatbuffers::grpc::Message<GetRequest>,flatbuffers::grpc::Message<GetResponse>>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedAll(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< flatbuffers::grpc::Message<GetRequest>,flatbuffers::grpc::Message<GetResponse>>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_New : public BaseClass {
@@ -320,24 +320,24 @@ class UserService final {
     virtual ::grpc::Status StreamedNew(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< flatbuffers::grpc::Message<PostRequest>,flatbuffers::grpc::Message<SuccessResponse>>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_Update : public BaseClass {
+  class WithStreamedUnaryMethod_Edit : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service */*service*/) {}
    public:
-    WithStreamedUnaryMethod_Update() {
+    WithStreamedUnaryMethod_Edit() {
       ::grpc::Service::MarkMethodStreamed(2,
-        new ::grpc::internal::StreamedUnaryHandler< flatbuffers::grpc::Message<PatchRequest>, flatbuffers::grpc::Message<SuccessResponse>>(std::bind(&WithStreamedUnaryMethod_Update<BaseClass>::StreamedUpdate, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler< flatbuffers::grpc::Message<PatchRequest>, flatbuffers::grpc::Message<SuccessResponse>>(std::bind(&WithStreamedUnaryMethod_Edit<BaseClass>::StreamedEdit, this, std::placeholders::_1, std::placeholders::_2)));
     }
-    ~WithStreamedUnaryMethod_Update() override {
+    ~WithStreamedUnaryMethod_Edit() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status Update(::grpc::ServerContext* /*context*/, const flatbuffers::grpc::Message<PatchRequest>* /*request*/, flatbuffers::grpc::Message<SuccessResponse>* /*response*/) final override {
+    ::grpc::Status Edit(::grpc::ServerContext* /*context*/, const flatbuffers::grpc::Message<PatchRequest>* /*request*/, flatbuffers::grpc::Message<SuccessResponse>* /*response*/) final override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedUpdate(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< flatbuffers::grpc::Message<PatchRequest>,flatbuffers::grpc::Message<SuccessResponse>>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedEdit(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< flatbuffers::grpc::Message<PatchRequest>,flatbuffers::grpc::Message<SuccessResponse>>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_Delete : public BaseClass {
@@ -359,9 +359,9 @@ class UserService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedDelete(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< flatbuffers::grpc::Message<DeleteRequest>,flatbuffers::grpc::Message<SuccessResponse>>* server_unary_streamer) = 0;
   };
-  typedef   WithStreamedUnaryMethod_Get<  WithStreamedUnaryMethod_New<  WithStreamedUnaryMethod_Update<  WithStreamedUnaryMethod_Delete<  Service   >   >   >   >   StreamedUnaryService;
+  typedef   WithStreamedUnaryMethod_All<  WithStreamedUnaryMethod_New<  WithStreamedUnaryMethod_Edit<  WithStreamedUnaryMethod_Delete<  Service   >   >   >   >   StreamedUnaryService;
   typedef   Service   SplitStreamedService;
-  typedef   WithStreamedUnaryMethod_Get<  WithStreamedUnaryMethod_New<  WithStreamedUnaryMethod_Update<  WithStreamedUnaryMethod_Delete<  Service   >   >   >   >   StreamedService;
+  typedef   WithStreamedUnaryMethod_All<  WithStreamedUnaryMethod_New<  WithStreamedUnaryMethod_Edit<  WithStreamedUnaryMethod_Delete<  Service   >   >   >   >   StreamedService;
 };
 
 }  // namespace user_fb
