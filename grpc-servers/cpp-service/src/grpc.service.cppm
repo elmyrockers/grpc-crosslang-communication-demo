@@ -41,8 +41,6 @@ public:
 
 	grpc::Status New(grpc::ServerContext* context, const user::PostRequest* request, user::SuccessResponse* response) override
 	{
-		std::print( stderr, "\n\nName: {}\nEmail: {}\nAge: {}\nLocation: {}", request->name(), request->email(), request->age(), request->location());
-
 		// gRPC request with flatbuffers
 			// Create a request with flatbuffers
 				flatbuffers::grpc::MessageBuilder mb;
@@ -61,6 +59,8 @@ public:
 				flatbuffers::grpc::Message<user_fb::SuccessResponse> responseMessage;
 				grpc::Status status = stub->New(&clientContext, requestMessage, &responseMessage);
 
+				std::print( stderr, "\n\n\nRequest Message:\nName: {}\nEmail: {}\nAge: {}\nLocation: {}", requestMessage.GetRoot()->name()->str(), requestMessage.GetRoot()->email()->str(), request->age(), requestMessage.GetRoot()->location()->str());
+
 			// Send response back to http-server
 				bool isOK = false;
 				if (status.ok()) {
@@ -68,6 +68,7 @@ public:
 					isOK = fbResponse->success();
 				}
 				response->set_success( isOK );
+				std::print( stderr, "\n\nResponse Message:\nSuccess: {}", isOK );
 
 		return grpc::Status::OK;
 	}
