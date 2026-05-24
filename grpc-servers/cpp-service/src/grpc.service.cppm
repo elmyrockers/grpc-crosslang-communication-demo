@@ -37,22 +37,27 @@ public:
 				auto requestMessage = mb.ReleaseMessage<user_fb::GetRequest>();
 				flatbuffers::grpc::Message<user_fb::GetResponse> responseMessage;
 				grpc::Status status = this->stub->All(&clientContext, requestMessage, &responseMessage);
+				if (!status.ok()) {
+					return grpc::Status(grpc::StatusCode::INTERNAL, "Downstream service failed: " + status.error_message());
+				}
 
+			// Send response back to http-server
+				const user_fb::GetResponse* fbResponse = responseMessage.GetRoot();
+				auto fbUsers = fbResponse->users();
+				if (!fbUsers) return grpc::Status::OK;
 
+				for (flatbuffers::uoffset_t i = 0; i < fbUsers->size(); ++i) {
+					const user_fb::User* fbUser = fbUsers->Get(i);
 
-			user::User* u1 = response->add_users();
-			u1->set_id(1);
-			u1->set_name("Ahmad");
-			u1->set_age(30);
-			u1->set_location("Kuala Lumpur");
-			u1->set_email("ahmad@gmail.com");
+					user::User* protoUser = response->add_users();
+					protoUser->set_id(fbUser->id());
+					protoUser->set_name(fbUser->name()->str());
+					protoUser->set_age(fbUser->age());
+					protoUser->set_location(fbUser->location()->str());
+					protoUser->set_email(fbUser->email()->str());
 
-			user::User* u2 = response->add_users();
-			u2->set_id(2);
-			u2->set_name("Siti");
-			u2->set_age(25);
-			u2->set_location("Alor Setar");
-			u2->set_email("siti@gmail.com");
+					std::print( stderr, "\n\n\nUser Detail {}:\nName: {}\nEmail: {}\nAge: {}\nLocation: {}", fbUser->id(), fbUser->name()->str(), fbUser->email()->str(), fbUser->age(), fbUser->location()->str());
+				}
 
 		return grpc::Status::OK;
 	}
