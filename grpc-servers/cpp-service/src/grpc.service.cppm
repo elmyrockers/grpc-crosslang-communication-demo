@@ -14,27 +14,32 @@ export module grpc.service;
 
 export class UserServer final : public user::UserService::Service
 {
+private:
+	std::unique_ptr<user_fb::UserService::Stub> stub;
 public:
-	UserServer(){
-		std::print( "UserServer dilaksanakan!" );
+	UserServer() {
+		auto requestChannel = grpc::CreateChannel("localhost:50052", grpc::InsecureChannelCredentials());
+		auto stub = user_fb::UserService::NewStub( requestChannel );
+		this->stub = std::move(stub);
 	}
 
 	// rpc All (GetRequest) returns (GetResponse);
 	grpc::Status All(grpc::ServerContext* context, const user::GetRequest* request, user::GetResponse* response) override
 	{
-		user::User* u1 = response->add_users();
-		u1->set_id(1);
-		u1->set_name("Ahmad");
-		u1->set_age(30);
-		u1->set_location("Kuala Lumpur");
-		u1->set_email("ahmad@gmail.com");
+		// Send Get Request with flatbuffers
+			user::User* u1 = response->add_users();
+			u1->set_id(1);
+			u1->set_name("Ahmad");
+			u1->set_age(30);
+			u1->set_location("Kuala Lumpur");
+			u1->set_email("ahmad@gmail.com");
 
-		user::User* u2 = response->add_users();
-		u2->set_id(2);
-		u2->set_name("Siti");
-		u2->set_age(25);
-		u2->set_location("Alor Setar");
-		u2->set_email("siti@gmail.com");
+			user::User* u2 = response->add_users();
+			u2->set_id(2);
+			u2->set_name("Siti");
+			u2->set_age(25);
+			u2->set_location("Alor Setar");
+			u2->set_email("siti@gmail.com");
 
 		return grpc::Status::OK;
 	}
@@ -51,13 +56,10 @@ public:
 				mb.Finish(fbRequest);
 
 			// Send a request to rust-service
-				auto channel = grpc::CreateChannel("localhost:50052", grpc::InsecureChannelCredentials());
-				auto stub = user_fb::UserService::NewStub(channel);
-
 				grpc::ClientContext clientContext;
 				auto requestMessage = mb.ReleaseMessage<user_fb::PostRequest>();
 				flatbuffers::grpc::Message<user_fb::SuccessResponse> responseMessage;
-				grpc::Status status = stub->New(&clientContext, requestMessage, &responseMessage);
+				grpc::Status status = this->stub->New(&clientContext, requestMessage, &responseMessage);
 
 				std::print( stderr, "\n\n\nRequest Message:\nName: {}\nEmail: {}\nAge: {}\nLocation: {}", requestMessage.GetRoot()->name()->str(), requestMessage.GetRoot()->email()->str(), request->age(), requestMessage.GetRoot()->location()->str());
 
