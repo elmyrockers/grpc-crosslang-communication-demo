@@ -44,7 +44,7 @@ namespace user_fb;
 // Service
 	rpc_service UserService {
 		All(GetRequest): GetResponse;
-		New(PostRequest): SuccessResponse;
+		Add(PostRequest): SuccessResponse;
 		Edit(PatchRequest): SuccessResponse;
 		Delete(DeleteRequest): SuccessResponse;
 	}
