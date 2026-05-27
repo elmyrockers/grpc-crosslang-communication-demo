@@ -6,7 +6,7 @@ option go_package = "pb/user";
 
 service UserService {
   rpc All (GetRequest) returns (GetResponse);
-  rpc New (PostRequest) returns (SuccessResponse);
+  rpc Add (PostRequest) returns (SuccessResponse);
   rpc Edit (PatchRequest) returns (SuccessResponse);
   rpc Delete (DeleteRequest) returns (SuccessResponse);
 }
