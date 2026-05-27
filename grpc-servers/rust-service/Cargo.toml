@@ -11,4 +11,4 @@ tonic = "0.14.6"
 
 [build-dependencies]
 flatbuffers-tonic-build = "0.1.2"
-tonic-build = "0.14.6"
+tonic-prost-build = "0.14.6"
