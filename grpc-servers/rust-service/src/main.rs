@@ -1,6 +1,9 @@
 #[path = "fbs/user_generated.rs"]
 #[allow(warnings)]
 mod user_generated;
+// pub mod pb {
+//     include!(concat!(env!("CARGO_MANIFEST_DIR"), "/src/pb/user.rs"));
+// }
 
 mod codec;
 mod router;
