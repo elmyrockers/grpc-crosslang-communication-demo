@@ -125,7 +125,7 @@ func main(){
 		defer sqlDB.Close()
 
 	// Listen to port 50051
-		lis, err := net.Listen("tcp", ":50051")
+		lis, err := net.Listen("tcp", ":50053")
 		if err != nil {
 			log.Fatalf("failed to listen: %v", err)
 		}
@@ -133,7 +133,7 @@ func main(){
 		grpcServer := grpc.NewServer()
 		user.RegisterUserServiceServer(grpcServer, &userServer{ query:query })
 
-		log.Println("Go service is running on :50051")
+		log.Println("Go service is running on :50053")
 		if err := grpcServer.Serve(lis); err != nil {
 			log.Fatalf("failed to serve: %v", err)
 		}
