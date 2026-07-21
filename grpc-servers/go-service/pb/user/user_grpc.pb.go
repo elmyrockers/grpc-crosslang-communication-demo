@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.6.1
 // - protoc             v6.31.0--rc2
-// source: proto/user.proto
+// source: user.proto
 
 package user
 
@@ -20,7 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	UserService_All_FullMethodName    = "/user.UserService/All"
-	UserService_New_FullMethodName    = "/user.UserService/New"
+	UserService_Add_FullMethodName    = "/user.UserService/Add"
 	UserService_Edit_FullMethodName   = "/user.UserService/Edit"
 	UserService_Delete_FullMethodName = "/user.UserService/Delete"
 )
@@ -30,7 +30,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserServiceClient interface {
 	All(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
-	New(ctx context.Context, in *PostRequest, opts ...grpc.CallOption) (*SuccessResponse, error)
+	Add(ctx context.Context, in *PostRequest, opts ...grpc.CallOption) (*SuccessResponse, error)
 	Edit(ctx context.Context, in *PatchRequest, opts ...grpc.CallOption) (*SuccessResponse, error)
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*SuccessResponse, error)
 }
@@ -53,10 +53,10 @@ func (c *userServiceClient) All(ctx context.Context, in *GetRequest, opts ...grp
 	return out, nil
 }
 
-func (c *userServiceClient) New(ctx context.Context, in *PostRequest, opts ...grpc.CallOption) (*SuccessResponse, error) {
+func (c *userServiceClient) Add(ctx context.Context, in *PostRequest, opts ...grpc.CallOption) (*SuccessResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(SuccessResponse)
-	err := c.cc.Invoke(ctx, UserService_New_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, UserService_Add_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +88,7 @@ func (c *userServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts 
 // for forward compatibility.
 type UserServiceServer interface {
 	All(context.Context, *GetRequest) (*GetResponse, error)
-	New(context.Context, *PostRequest) (*SuccessResponse, error)
+	Add(context.Context, *PostRequest) (*SuccessResponse, error)
 	Edit(context.Context, *PatchRequest) (*SuccessResponse, error)
 	Delete(context.Context, *DeleteRequest) (*SuccessResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
@@ -104,8 +104,8 @@ type UnimplementedUserServiceServer struct{}
 func (UnimplementedUserServiceServer) All(context.Context, *GetRequest) (*GetResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method All not implemented")
 }
-func (UnimplementedUserServiceServer) New(context.Context, *PostRequest) (*SuccessResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method New not implemented")
+func (UnimplementedUserServiceServer) Add(context.Context, *PostRequest) (*SuccessResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Add not implemented")
 }
 func (UnimplementedUserServiceServer) Edit(context.Context, *PatchRequest) (*SuccessResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Edit not implemented")
@@ -152,20 +152,20 @@ func _UserService_All_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserService_New_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UserService_Add_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PostRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServiceServer).New(ctx, in)
+		return srv.(UserServiceServer).Add(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: UserService_New_FullMethodName,
+		FullMethod: UserService_Add_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).New(ctx, req.(*PostRequest))
+		return srv.(UserServiceServer).Add(ctx, req.(*PostRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -218,8 +218,8 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _UserService_All_Handler,
 		},
 		{
-			MethodName: "New",
-			Handler:    _UserService_New_Handler,
+			MethodName: "Add",
+			Handler:    _UserService_Add_Handler,
 		},
 		{
 			MethodName: "Edit",
@@ -231,5 +231,5 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/user.proto",
+	Metadata: "user.proto",
 }
