@@ -77,7 +77,7 @@ public:
 				grpc::ClientContext clientContext;
 				auto requestMessage = mb.ReleaseMessage<user_fb::PostRequest>();
 				flatbuffers::grpc::Message<user_fb::SuccessResponse> responseMessage;
-				grpc::Status status = this->stub->New(&clientContext, requestMessage, &responseMessage);
+				grpc::Status status = this->stub->Add(&clientContext, requestMessage, &responseMessage);
 
 				std::print( stderr, "\n\n\nRequest Message:\nName: {}\nEmail: {}\nAge: {}\nLocation: {}", requestMessage.GetRoot()->name()->str(), requestMessage.GetRoot()->email()->str(), request->age(), requestMessage.GetRoot()->location()->str());
 
