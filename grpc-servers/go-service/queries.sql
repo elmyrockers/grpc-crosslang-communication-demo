@@ -1,7 +1,7 @@
 -- name: All :many
 SELECT id, name, age, location, email FROM users;
 
--- name: New :exec
+-- name: Add :exec
 INSERT INTO users (name, age, location, email)
 VALUES (?, ?, ?, ?);
 
