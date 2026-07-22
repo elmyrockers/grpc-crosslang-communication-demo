@@ -51,7 +51,7 @@ func (s *userServer) All(ctx context.Context, req *user.GetRequest) (*user.GetRe
 
 	return &user.GetResponse{Users: pbUsers}, nil
 }
-func (s *userServer) New(ctx context.Context, req *user.PostRequest) (*user.SuccessResponse, error) {
+func (s *userServer) Add(ctx context.Context, req *user.PostRequest) (*user.SuccessResponse, error) {
 	// Prepare params
 		params := db.NewParams{
 			Name:     req.Name,
@@ -61,7 +61,7 @@ func (s *userServer) New(ctx context.Context, req *user.PostRequest) (*user.Succ
 		}
 
 	// Add new user
-		err := s.query.New( context.Background(), params )
+		err := s.query.Add( context.Background(), params )
 		if err != nil {
 			return nil, status.Errorf(codes.Internal, "failed to add new user: %v", err)
 		}
