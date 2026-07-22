@@ -17,7 +17,7 @@ namespace user_fb {
 
 static const char* UserService_method_names[] = {
   "/user_fb.UserService/All",
-  "/user_fb.UserService/New",
+  "/user_fb.UserService/Add",
   "/user_fb.UserService/Edit",
   "/user_fb.UserService/Delete",
 };
@@ -29,7 +29,7 @@ std::unique_ptr< UserService::Stub> UserService::NewStub(const std::shared_ptr< 
 
 UserService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel)
   : channel_(channel)  , rpcmethod_All_(UserService_method_names[0], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_New_(UserService_method_names[1], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_Add_(UserService_method_names[1], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_Edit_(UserService_method_names[2], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_Delete_(UserService_method_names[3], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
@@ -46,16 +46,16 @@ UserService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channe
   return ::grpc::internal::ClientAsyncResponseReaderFactory< flatbuffers::grpc::Message<GetResponse>>::Create(channel_.get(), cq, rpcmethod_All_, context, request, false);
 }
 
-::grpc::Status UserService::Stub::New(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PostRequest>& request, flatbuffers::grpc::Message<SuccessResponse>* response) {
-  return ::grpc::internal::BlockingUnaryCall(channel_.get(), rpcmethod_New_, context, request, response);
+::grpc::Status UserService::Stub::Add(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PostRequest>& request, flatbuffers::grpc::Message<SuccessResponse>* response) {
+  return ::grpc::internal::BlockingUnaryCall(channel_.get(), rpcmethod_Add_, context, request, response);
 }
 
-::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>* UserService::Stub::AsyncNewRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PostRequest>& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderFactory< flatbuffers::grpc::Message<SuccessResponse>>::Create(channel_.get(), cq, rpcmethod_New_, context, request, true);
+::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>* UserService::Stub::AsyncAddRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PostRequest>& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderFactory< flatbuffers::grpc::Message<SuccessResponse>>::Create(channel_.get(), cq, rpcmethod_Add_, context, request, true);
 }
 
-::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>* UserService::Stub::PrepareAsyncNewRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PostRequest>& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderFactory< flatbuffers::grpc::Message<SuccessResponse>>::Create(channel_.get(), cq, rpcmethod_New_, context, request, false);
+::grpc::ClientAsyncResponseReader< flatbuffers::grpc::Message<SuccessResponse>>* UserService::Stub::PrepareAsyncAddRaw(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PostRequest>& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderFactory< flatbuffers::grpc::Message<SuccessResponse>>::Create(channel_.get(), cq, rpcmethod_Add_, context, request, false);
 }
 
 ::grpc::Status UserService::Stub::Edit(::grpc::ClientContext* context, const flatbuffers::grpc::Message<PatchRequest>& request, flatbuffers::grpc::Message<SuccessResponse>* response) {
@@ -92,7 +92,7 @@ UserService::Service::Service() {
       UserService_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< UserService::Service, flatbuffers::grpc::Message<PostRequest>, flatbuffers::grpc::Message<SuccessResponse>>(
-          std::mem_fn(&UserService::Service::New), this)));
+          std::mem_fn(&UserService::Service::Add), this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       UserService_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
@@ -112,7 +112,7 @@ UserService::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status UserService::Service::New(::grpc::ServerContext* /*context*/, const flatbuffers::grpc::Message<PostRequest>* /*request*/, flatbuffers::grpc::Message<SuccessResponse>* /*response*/) {
+::grpc::Status UserService::Service::Add(::grpc::ServerContext* /*context*/, const flatbuffers::grpc::Message<PostRequest>* /*request*/, flatbuffers::grpc::Message<SuccessResponse>* /*response*/) {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
