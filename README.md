@@ -30,5 +30,5 @@ Minimal cross-language gRPC demo illustrating service-to-service communication b
 3. **C++ to Rust (FlatBuffers)**: The C++ Service delegates the call via gRPC to the **Rust Service** using **FlatBuffers**.
 4. **Rust to Go (Protobuf)**: The Rust Service passes the request via gRPC to the **Go-Service** using **Protobuf**.
 5. **Data Persistence**: The Go-Service fetches/persists data using SQL in **MariaDB**.
-6. **Return Path**: The response travels backward along the chain:
+6. **Return Path**: The response travels backward along the chain:<br>
    `MariaDB` ➔ `Go-Service` (Protobuf) ➔ `Rust Service` (FlatBuffers) ➔ `C++ Service` (Protobuf) ➔ `Go HTTP Server` (JSON) ➔ `Client Browser (AJAX)`.
