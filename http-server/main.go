@@ -14,8 +14,8 @@ import (
 )
 
 func main() {
-	// Connect to go-service (gRPC server)
-		connection, err := grpc.Dial("localhost:50053", grpc.WithInsecure())
+	// Connect to cpp-service (gRPC server)
+		connection, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
 		if err != nil {
 			log.Fatalf("did not connect: %v", err)
 		}
