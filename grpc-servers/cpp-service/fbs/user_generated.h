@@ -36,25 +36,8 @@ struct GetResponseBuilder;
 struct SuccessResponse;
 struct SuccessResponseBuilder;
 
-inline const ::flatbuffers::TypeTable *GetRequestTypeTable();
-
-inline const ::flatbuffers::TypeTable *PostRequestTypeTable();
-
-inline const ::flatbuffers::TypeTable *PatchRequestTypeTable();
-
-inline const ::flatbuffers::TypeTable *DeleteRequestTypeTable();
-
-inline const ::flatbuffers::TypeTable *UserTypeTable();
-
-inline const ::flatbuffers::TypeTable *GetResponseTypeTable();
-
-inline const ::flatbuffers::TypeTable *SuccessResponseTypeTable();
-
 struct GetRequest FLATBUFFERS_FINAL_CLASS : private ::flatbuffers::Table {
   typedef GetRequestBuilder Builder;
-  static const ::flatbuffers::TypeTable *MiniReflectTypeTable() {
-    return GetRequestTypeTable();
-  }
   template <bool B = false>
   bool Verify(::flatbuffers::VerifierTemplate<B> &verifier) const {
     return VerifyTableStart(verifier) &&
@@ -85,9 +68,6 @@ inline ::flatbuffers::Offset<GetRequest> CreateGetRequest(
 
 struct PostRequest FLATBUFFERS_FINAL_CLASS : private ::flatbuffers::Table {
   typedef PostRequestBuilder Builder;
-  static const ::flatbuffers::TypeTable *MiniReflectTypeTable() {
-    return PostRequestTypeTable();
-  }
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
     VT_NAME = 4,
     VT_AGE = 6,
@@ -180,9 +160,6 @@ inline ::flatbuffers::Offset<PostRequest> CreatePostRequestDirect(
 
 struct PatchRequest FLATBUFFERS_FINAL_CLASS : private ::flatbuffers::Table {
   typedef PatchRequestBuilder Builder;
-  static const ::flatbuffers::TypeTable *MiniReflectTypeTable() {
-    return PatchRequestTypeTable();
-  }
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
     VT_ID = 4,
     VT_NAME = 6,
@@ -287,9 +264,6 @@ inline ::flatbuffers::Offset<PatchRequest> CreatePatchRequestDirect(
 
 struct DeleteRequest FLATBUFFERS_FINAL_CLASS : private ::flatbuffers::Table {
   typedef DeleteRequestBuilder Builder;
-  static const ::flatbuffers::TypeTable *MiniReflectTypeTable() {
-    return DeleteRequestTypeTable();
-  }
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
     VT_ID = 4
   };
@@ -332,9 +306,6 @@ inline ::flatbuffers::Offset<DeleteRequest> CreateDeleteRequest(
 
 struct User FLATBUFFERS_FINAL_CLASS : private ::flatbuffers::Table {
   typedef UserBuilder Builder;
-  static const ::flatbuffers::TypeTable *MiniReflectTypeTable() {
-    return UserTypeTable();
-  }
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
     VT_ID = 4,
     VT_NAME = 6,
@@ -439,9 +410,6 @@ inline ::flatbuffers::Offset<User> CreateUserDirect(
 
 struct GetResponse FLATBUFFERS_FINAL_CLASS : private ::flatbuffers::Table {
   typedef GetResponseBuilder Builder;
-  static const ::flatbuffers::TypeTable *MiniReflectTypeTable() {
-    return GetResponseTypeTable();
-  }
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
     VT_USERS = 4
   };
@@ -495,9 +463,6 @@ inline ::flatbuffers::Offset<GetResponse> CreateGetResponseDirect(
 
 struct SuccessResponse FLATBUFFERS_FINAL_CLASS : private ::flatbuffers::Table {
   typedef SuccessResponseBuilder Builder;
-  static const ::flatbuffers::TypeTable *MiniReflectTypeTable() {
-    return SuccessResponseTypeTable();
-  }
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
     VT_SUCCESS = 4
   };
@@ -536,116 +501,6 @@ inline ::flatbuffers::Offset<SuccessResponse> CreateSuccessResponse(
   SuccessResponseBuilder builder_(_fbb);
   builder_.add_success(success);
   return builder_.Finish();
-}
-
-inline const ::flatbuffers::TypeTable *GetRequestTypeTable() {
-  static const ::flatbuffers::TypeTable tt = {
-    ::flatbuffers::ST_TABLE, 0, nullptr, nullptr, nullptr, nullptr, nullptr
-  };
-  return &tt;
-}
-
-inline const ::flatbuffers::TypeTable *PostRequestTypeTable() {
-  static const ::flatbuffers::TypeCode type_codes[] = {
-    { ::flatbuffers::ET_STRING, 0, -1 },
-    { ::flatbuffers::ET_INT, 0, -1 },
-    { ::flatbuffers::ET_STRING, 0, -1 },
-    { ::flatbuffers::ET_STRING, 0, -1 }
-  };
-  static const char * const names[] = {
-    "name",
-    "age",
-    "location",
-    "email"
-  };
-  static const ::flatbuffers::TypeTable tt = {
-    ::flatbuffers::ST_TABLE, 4, type_codes, nullptr, nullptr, nullptr, names
-  };
-  return &tt;
-}
-
-inline const ::flatbuffers::TypeTable *PatchRequestTypeTable() {
-  static const ::flatbuffers::TypeCode type_codes[] = {
-    { ::flatbuffers::ET_INT, 0, -1 },
-    { ::flatbuffers::ET_STRING, 0, -1 },
-    { ::flatbuffers::ET_INT, 0, -1 },
-    { ::flatbuffers::ET_STRING, 0, -1 },
-    { ::flatbuffers::ET_STRING, 0, -1 }
-  };
-  static const char * const names[] = {
-    "id",
-    "name",
-    "age",
-    "location",
-    "email"
-  };
-  static const ::flatbuffers::TypeTable tt = {
-    ::flatbuffers::ST_TABLE, 5, type_codes, nullptr, nullptr, nullptr, names
-  };
-  return &tt;
-}
-
-inline const ::flatbuffers::TypeTable *DeleteRequestTypeTable() {
-  static const ::flatbuffers::TypeCode type_codes[] = {
-    { ::flatbuffers::ET_INT, 0, -1 }
-  };
-  static const char * const names[] = {
-    "id"
-  };
-  static const ::flatbuffers::TypeTable tt = {
-    ::flatbuffers::ST_TABLE, 1, type_codes, nullptr, nullptr, nullptr, names
-  };
-  return &tt;
-}
-
-inline const ::flatbuffers::TypeTable *UserTypeTable() {
-  static const ::flatbuffers::TypeCode type_codes[] = {
-    { ::flatbuffers::ET_INT, 0, -1 },
-    { ::flatbuffers::ET_STRING, 0, -1 },
-    { ::flatbuffers::ET_INT, 0, -1 },
-    { ::flatbuffers::ET_STRING, 0, -1 },
-    { ::flatbuffers::ET_STRING, 0, -1 }
-  };
-  static const char * const names[] = {
-    "id",
-    "name",
-    "age",
-    "location",
-    "email"
-  };
-  static const ::flatbuffers::TypeTable tt = {
-    ::flatbuffers::ST_TABLE, 5, type_codes, nullptr, nullptr, nullptr, names
-  };
-  return &tt;
-}
-
-inline const ::flatbuffers::TypeTable *GetResponseTypeTable() {
-  static const ::flatbuffers::TypeCode type_codes[] = {
-    { ::flatbuffers::ET_SEQUENCE, 1, 0 }
-  };
-  static const ::flatbuffers::TypeFunction type_refs[] = {
-    user_fb::UserTypeTable
-  };
-  static const char * const names[] = {
-    "users"
-  };
-  static const ::flatbuffers::TypeTable tt = {
-    ::flatbuffers::ST_TABLE, 1, type_codes, type_refs, nullptr, nullptr, names
-  };
-  return &tt;
-}
-
-inline const ::flatbuffers::TypeTable *SuccessResponseTypeTable() {
-  static const ::flatbuffers::TypeCode type_codes[] = {
-    { ::flatbuffers::ET_BOOL, 0, -1 }
-  };
-  static const char * const names[] = {
-    "success"
-  };
-  static const ::flatbuffers::TypeTable tt = {
-    ::flatbuffers::ST_TABLE, 1, type_codes, nullptr, nullptr, nullptr, names
-  };
-  return &tt;
 }
 
 inline const user_fb::GetResponse *GetGetResponse(const void *buf) {
