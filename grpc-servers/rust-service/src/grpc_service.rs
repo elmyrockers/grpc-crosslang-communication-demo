@@ -1,4 +1,3 @@
-use std::sync::atomic::{AtomicI32, Ordering};
 use std::sync::Mutex;
 use bytes::Bytes;
 use flatbuffers::FlatBufferBuilder;
@@ -14,6 +13,8 @@ use crate::user_pb::user_service_client::UserServiceClient;
 use crate::user_pb::GetRequest as PbGetRequest;
 use tonic::transport::Channel;
 
+use crate::user_pb::PostRequest as PbPostRequest;
+
 #[derive(Debug, Clone)]
 struct UserRecord {
 	id: i32,
@@ -23,7 +24,6 @@ struct UserRecord {
 	email: String,
 }
 
-static NEXT_ID: AtomicI32 = AtomicI32::new(1);
 
 pub struct UserService {
 	users: Mutex<Vec<UserRecord>>,
@@ -37,13 +37,6 @@ impl UserService {
 
 	pub async fn all(&self, _raw: &[u8]) -> Result<Bytes, Status> {
 		println!("All() called");
-		
-		// Example: List of users
-			// let users = vec![
-			// 	UserRecord { id: 1, name: "Alice".into(), age: 30, location: "New York".into(), email: "alice@email.com".into() },
-			// 	UserRecord { id: 2, name: "Bob".into(),   age: 25, location: "London".into(),   email: "bob@email.com".into() },
-			// 	UserRecord { id: 3, name: "Charlie".into(), age: 35, location: "Tokyo".into(),  email: "charlie@email.com".into() },
-			// ];
 
 		// Get list of users
 			let mut client = self.client.clone();
@@ -77,19 +70,25 @@ impl UserService {
 		Ok(Bytes::copy_from_slice(b.finished_data()))
 	}
 
-	pub fn add(&self, raw: &[u8]) -> Result<Bytes, Status> {
+	pub async fn add(&self, raw: &[u8]) -> Result<Bytes, Status> {
 		let req = flatbuffers::root::<PostRequest>(raw)
 			.map_err(|e| Status::invalid_argument(e.to_string()))?;
 
-		self.users.lock().unwrap().push(UserRecord {
-			id:       NEXT_ID.fetch_add(1, Ordering::SeqCst),
-			name:     req.name().unwrap_or("").to_string(),
-			age:      req.age(),
-			location: req.location().unwrap_or("").to_string(),
-			email:    req.email().unwrap_or("").to_string(),
-		});
+		let mut client = self.client.clone();
+		let go_resp = client
+			.add(PbPostRequest {
+				name: req.name().unwrap_or("").to_string(),
+				age: req.age(),
+				location: req.location().unwrap_or("").to_string(),
+				email: req.email().unwrap_or("").to_string(),
+			})
+			.await
+			.map_err(|e| Status::internal(format!("go user service call failed: {}", e)))?
+			.into_inner();
 
-		self.success(true)
+		println!("Go response: {:#?}", go_resp);
+
+		self.success(go_resp.success)
 	}
 
 	pub fn edit(&self, raw: &[u8]) -> Result<Bytes, Status> {
