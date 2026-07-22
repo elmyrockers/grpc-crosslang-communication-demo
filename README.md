@@ -1,7 +1,6 @@
 # gRPC-CrossLang-Communication-Demo
 Minimal cross-language gRPC demo illustrating service-to-service communication between C++, Rust, and Go using FlatBuffers payloads.
-
-![Microservices Architecture Flow](img/microservices-architecture-flow.png)
+![gRPC](img/grpc.svg)
 
 ## Tech Stack
 
@@ -16,3 +15,5 @@ Minimal cross-language gRPC demo illustrating service-to-service communication b
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![Alpine.js](https://img.shields.io/badge/Alpine.js-77C1D2?style=for-the-badge&logo=alpine.js&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+
+![Microservices Architecture Flow](img/microservices-architecture-flow.png)
