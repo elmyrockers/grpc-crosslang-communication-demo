@@ -28,7 +28,7 @@ fn add_handler(svc: Arc<UserService>, buf: Bytes) -> HandlerFuture {
     Box::pin(async move { svc.add(&buf).await })
 }
 fn edit_handler(svc: Arc<UserService>, buf: Bytes) -> HandlerFuture {
-    Box::pin(async move { svc.edit(&buf) })
+    Box::pin(async move { svc.edit(&buf).await })
 }
 fn delete_handler(svc: Arc<UserService>, buf: Bytes) -> HandlerFuture {
     Box::pin(async move { svc.delete(&buf) })
