@@ -53,7 +53,7 @@ func (s *userServer) All(ctx context.Context, req *user.GetRequest) (*user.GetRe
 }
 func (s *userServer) Add(ctx context.Context, req *user.PostRequest) (*user.SuccessResponse, error) {
 	// Prepare params
-		params := db.NewParams{
+		params := db.AddParams{
 			Name:     req.Name,
 			Age:      req.Age,
 			Location: sql.NullString{String: req.Location, Valid: req.Location != ""},
