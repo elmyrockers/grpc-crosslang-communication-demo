@@ -10,6 +10,28 @@ import (
 	"database/sql"
 )
 
+const add = `-- name: Add :exec
+INSERT INTO users (name, age, location, email)
+VALUES (?, ?, ?, ?)
+`
+
+type AddParams struct {
+	Name     string         `json:"name"`
+	Age      int32          `json:"age"`
+	Location sql.NullString `json:"location"`
+	Email    sql.NullString `json:"email"`
+}
+
+func (q *Queries) Add(ctx context.Context, arg AddParams) error {
+	_, err := q.exec(ctx, q.addStmt, add,
+		arg.Name,
+		arg.Age,
+		arg.Location,
+		arg.Email,
+	)
+	return err
+}
+
 const all = `-- name: All :many
 SELECT id, name, age, location, email FROM users
 `
@@ -71,28 +93,6 @@ func (q *Queries) Edit(ctx context.Context, arg EditParams) error {
 		arg.Location,
 		arg.Email,
 		arg.ID,
-	)
-	return err
-}
-
-const new = `-- name: New :exec
-INSERT INTO users (name, age, location, email)
-VALUES (?, ?, ?, ?)
-`
-
-type NewParams struct {
-	Name     string         `json:"name"`
-	Age      int32          `json:"age"`
-	Location sql.NullString `json:"location"`
-	Email    sql.NullString `json:"email"`
-}
-
-func (q *Queries) New(ctx context.Context, arg NewParams) error {
-	_, err := q.exec(ctx, q.newStmt, new,
-		arg.Name,
-		arg.Age,
-		arg.Location,
-		arg.Email,
 	)
 	return err
 }

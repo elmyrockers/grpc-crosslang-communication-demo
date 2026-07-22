@@ -9,10 +9,10 @@ import (
 )
 
 type Querier interface {
+	Add(ctx context.Context, arg AddParams) error
 	All(ctx context.Context) ([]User, error)
 	Delete(ctx context.Context, id int32) error
 	Edit(ctx context.Context, arg EditParams) error
-	New(ctx context.Context, arg NewParams) error
 }
 
 var _ Querier = (*Queries)(nil)

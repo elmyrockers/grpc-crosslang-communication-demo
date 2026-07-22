@@ -24,6 +24,9 @@ func New(db DBTX) *Queries {
 func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	q := Queries{db: db}
 	var err error
+	if q.addStmt, err = db.PrepareContext(ctx, add); err != nil {
+		return nil, fmt.Errorf("error preparing query Add: %w", err)
+	}
 	if q.allStmt, err = db.PrepareContext(ctx, all); err != nil {
 		return nil, fmt.Errorf("error preparing query All: %w", err)
 	}
@@ -33,14 +36,16 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	if q.editStmt, err = db.PrepareContext(ctx, edit); err != nil {
 		return nil, fmt.Errorf("error preparing query Edit: %w", err)
 	}
-	if q.newStmt, err = db.PrepareContext(ctx, new); err != nil {
-		return nil, fmt.Errorf("error preparing query New: %w", err)
-	}
 	return &q, nil
 }
 
 func (q *Queries) Close() error {
 	var err error
+	if q.addStmt != nil {
+		if cerr := q.addStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing addStmt: %w", cerr)
+		}
+	}
 	if q.allStmt != nil {
 		if cerr := q.allStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing allStmt: %w", cerr)
@@ -54,11 +59,6 @@ func (q *Queries) Close() error {
 	if q.editStmt != nil {
 		if cerr := q.editStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing editStmt: %w", cerr)
-		}
-	}
-	if q.newStmt != nil {
-		if cerr := q.newStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing newStmt: %w", cerr)
 		}
 	}
 	return err
@@ -100,19 +100,19 @@ func (q *Queries) queryRow(ctx context.Context, stmt *sql.Stmt, query string, ar
 type Queries struct {
 	db         DBTX
 	tx         *sql.Tx
+	addStmt    *sql.Stmt
 	allStmt    *sql.Stmt
 	deleteStmt *sql.Stmt
 	editStmt   *sql.Stmt
-	newStmt    *sql.Stmt
 }
 
 func (q *Queries) WithTx(tx *sql.Tx) *Queries {
 	return &Queries{
 		db:         tx,
 		tx:         tx,
+		addStmt:    q.addStmt,
 		allStmt:    q.allStmt,
 		deleteStmt: q.deleteStmt,
 		editStmt:   q.editStmt,
-		newStmt:    q.newStmt,
 	}
 }
