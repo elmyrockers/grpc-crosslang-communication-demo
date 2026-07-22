@@ -31,7 +31,7 @@ fn edit_handler(svc: Arc<UserService>, buf: Bytes) -> HandlerFuture {
     Box::pin(async move { svc.edit(&buf).await })
 }
 fn delete_handler(svc: Arc<UserService>, buf: Bytes) -> HandlerFuture {
-    Box::pin(async move { svc.delete(&buf) })
+    Box::pin(async move { svc.delete(&buf).await })
 }
 
 #[derive(Clone)]
