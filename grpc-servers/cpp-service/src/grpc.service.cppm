@@ -95,7 +95,31 @@ public:
 
 	grpc::Status Edit(grpc::ServerContext* context, const user::PatchRequest* request, user::SuccessResponse* response) override
 	{
-		std::print( stderr, "\n\nID: {}\nName: {}\nEmail: {}\nAge: {}\nLocation: {}", request->id(), request->name(), request->email(), request->age(), request->location());
+		// gRPC request with flatbuffers
+			// Create a request with flatbuffers
+				flatbuffers::grpc::MessageBuilder mb;
+				auto name = mb.CreateString( request->name() );
+				auto location = mb.CreateString( request->location() );
+				auto email = mb.CreateString( request->email() );
+				auto fbRequest = user_fb::CreatePatchRequest(mb, request->id(), name, request->age(), location, email );
+				mb.Finish(fbRequest);
+
+			// Send a request to rust-service
+				grpc::ClientContext clientContext;
+				auto requestMessage = mb.ReleaseMessage<user_fb::PatchRequest>();
+				flatbuffers::grpc::Message<user_fb::SuccessResponse> responseMessage;
+				grpc::Status status = this->stub->Edit(&clientContext, requestMessage, &responseMessage);
+
+				std::print( stderr, "\n\n\nRequest Message:\nID: {}\nName: {}\nEmail: {}\nAge: {}\nLocation: {}", requestMessage.GetRoot()->id(), requestMessage.GetRoot()->name()->str(), requestMessage.GetRoot()->email()->str(), request->age(), requestMessage.GetRoot()->location()->str());
+
+			// Send response back to http-server
+				bool isOK = false;
+				if (status.ok()) {
+					const user_fb::SuccessResponse* fbResponse = responseMessage.GetRoot();
+					isOK = fbResponse->success();
+				}
+				response->set_success( isOK );
+				std::print( stderr, "\n\nResponse Message:\nSuccess: {}", isOK );
 
 		return grpc::Status::OK;
 	}
