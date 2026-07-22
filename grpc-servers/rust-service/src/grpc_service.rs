@@ -15,6 +15,7 @@ use tonic::transport::Channel;
 
 use crate::user_pb::PostRequest as PbPostRequest;
 use crate::user_pb::PatchRequest as PbPatchRequest;
+use crate::user_pb::DeleteRequest as PbDeleteRequest;
 
 #[derive(Debug, Clone)]
 struct UserRecord {
@@ -37,7 +38,7 @@ impl UserService {
 	}
 
 	pub async fn all(&self, _raw: &[u8]) -> Result<Bytes, Status> {
-		println!("All() called");
+		println!("all() called");
 
 		// Get list of users
 			let mut client = self.client.clone();
@@ -72,7 +73,7 @@ impl UserService {
 	}
 
 	pub async fn add(&self, raw: &[u8]) -> Result<Bytes, Status> {
-		println!("Add() called");
+		println!("add() called");
 
 		// Send post request to go-service
 			let request = flatbuffers::root::<PostRequest>(raw)
@@ -96,6 +97,8 @@ impl UserService {
 	}
 
 	pub async fn edit(&self, raw: &[u8]) -> Result<Bytes, Status> {
+		println!("edit() called");
+
 		// Send patch request to go-service
 			let request = flatbuffers::root::<PatchRequest>(raw)
 				.map_err(|e| Status::invalid_argument(e.to_string()))?;
@@ -118,14 +121,22 @@ impl UserService {
 			self.success(response.success)
 	}
 
-	pub fn delete(&self, raw: &[u8]) -> Result<Bytes, Status> {
-		let req = flatbuffers::root::<DeleteRequest>(raw)
-			.map_err(|e| Status::invalid_argument(e.to_string()))?;
+	pub async fn delete(&self, raw: &[u8]) -> Result<Bytes, Status> {
+		println!("delete() called");
 
-		let mut users = self.users.lock().unwrap();
-		let before = users.len();
-		users.retain(|u| u.id != req.id());
-		self.success(users.len() < before)
+		// Send delete request to go-service
+			let request = flatbuffers::root::<DeleteRequest>(raw)
+								.map_err(|e| Status::invalid_argument(e.to_string()))?;
+
+			let mut client = self.client.clone();
+			let response = client.delete(PbDeleteRequest { id: request.id() })
+								 .await
+								 .map_err(|e| Status::internal(format!("go user service call failed: {}", e)))?
+								 .into_inner();
+			println!("Go response: {:#?}", response);
+			
+		// Send response back to cpp-service
+			self.success(response.success)
 	}
 
 	fn success(&self, ok: bool) -> Result<Bytes, Status> {
