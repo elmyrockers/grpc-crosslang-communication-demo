@@ -71,24 +71,27 @@ impl UserService {
 	}
 
 	pub async fn add(&self, raw: &[u8]) -> Result<Bytes, Status> {
-		let req = flatbuffers::root::<PostRequest>(raw)
-			.map_err(|e| Status::invalid_argument(e.to_string()))?;
+		println!("Add() called");
 
-		let mut client = self.client.clone();
-		let go_resp = client
-			.add(PbPostRequest {
-				name: req.name().unwrap_or("").to_string(),
-				age: req.age(),
-				location: req.location().unwrap_or("").to_string(),
-				email: req.email().unwrap_or("").to_string(),
-			})
-			.await
-			.map_err(|e| Status::internal(format!("go user service call failed: {}", e)))?
-			.into_inner();
+		// Send post request to go-service
+			let request = flatbuffers::root::<PostRequest>(raw)
+				.map_err(|e| Status::invalid_argument(e.to_string()))?;
 
-		println!("Go response: {:#?}", go_resp);
+			let mut client = self.client.clone();
+			let response = client
+							.add(PbPostRequest {
+								name: request.name().unwrap_or("").to_string(),
+								age: request.age(),
+								location: request.location().unwrap_or("").to_string(),
+								email: request.email().unwrap_or("").to_string(),
+							})
+							.await
+							.map_err(|e| Status::internal(format!("go user service call failed: {}", e)))?
+							.into_inner();
+			println!("Go response: {:#?}", response);
 
-		self.success(go_resp.success)
+		// Send response back to cpp-service
+			self.success(response.success)
 	}
 
 	pub fn edit(&self, raw: &[u8]) -> Result<Bytes, Status> {
