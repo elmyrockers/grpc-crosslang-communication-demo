@@ -14,6 +14,7 @@ use crate::user_pb::GetRequest as PbGetRequest;
 use tonic::transport::Channel;
 
 use crate::user_pb::PostRequest as PbPostRequest;
+use crate::user_pb::PatchRequest as PbPatchRequest;
 
 #[derive(Debug, Clone)]
 struct UserRecord {
@@ -94,21 +95,27 @@ impl UserService {
 			self.success(response.success)
 	}
 
-	pub fn edit(&self, raw: &[u8]) -> Result<Bytes, Status> {
-		let req = flatbuffers::root::<PatchRequest>(raw)
-			.map_err(|e| Status::invalid_argument(e.to_string()))?;
+	pub async fn edit(&self, raw: &[u8]) -> Result<Bytes, Status> {
+		// Send patch request to go-service
+			let request = flatbuffers::root::<PatchRequest>(raw)
+				.map_err(|e| Status::invalid_argument(e.to_string()))?;
 
-		let mut users = self.users.lock().unwrap();
-		match users.iter_mut().find(|u| u.id == req.id()) {
-			Some(u) => {
-				if let Some(v) = req.name()     { u.name     = v.to_string(); }
-				if let Some(v) = req.location() { u.location = v.to_string(); }
-				if let Some(v) = req.email()    { u.email    = v.to_string(); }
-				if req.age() != 0               { u.age      = req.age(); }
-				self.success(true)
-			}
-			None => self.success(false),
-		}
+			let mut client = self.client.clone();
+			let response = client
+				.edit(PbPatchRequest {
+					id: request.id(),
+					name: request.name().unwrap_or("").to_string(),
+					age: request.age(),
+					location: request.location().unwrap_or("").to_string(),
+					email: request.email().unwrap_or("").to_string(),
+				})
+				.await
+				.map_err(|e| Status::internal(format!("go user service call failed: {}", e)))?
+				.into_inner();
+			println!("Go response: {:#?}", response);
+
+		// Send response back to cpp-service
+			self.success(response.success)
 	}
 
 	pub fn delete(&self, raw: &[u8]) -> Result<Bytes, Status> {
