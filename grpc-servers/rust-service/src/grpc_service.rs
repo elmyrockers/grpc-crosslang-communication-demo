@@ -1,4 +1,3 @@
-use std::sync::Mutex;
 use bytes::Bytes;
 use flatbuffers::FlatBufferBuilder;
 use tonic::Status;
@@ -17,24 +16,14 @@ use crate::user_pb::PostRequest as PbPostRequest;
 use crate::user_pb::PatchRequest as PbPatchRequest;
 use crate::user_pb::DeleteRequest as PbDeleteRequest;
 
-#[derive(Debug, Clone)]
-struct UserRecord {
-	id: i32,
-	name: String,
-	age: i32,
-	location: String,
-	email: String,
-}
-
 
 pub struct UserService {
-	users: Mutex<Vec<UserRecord>>,
 	client: UserServiceClient<Channel>,
 }
 
 impl UserService {
 	pub fn new(client: UserServiceClient<Channel>) -> Self {
-		Self { users: Mutex::new(Vec::new()), client }
+		Self { client }
 	}
 
 	pub async fn all(&self, _raw: &[u8]) -> Result<Bytes, Status> {
@@ -134,7 +123,7 @@ impl UserService {
 								 .map_err(|e| Status::internal(format!("go user service call failed: {}", e)))?
 								 .into_inner();
 			println!("Go response: {:#?}", response);
-			
+
 		// Send response back to cpp-service
 			self.success(response.success)
 	}
