@@ -130,13 +130,18 @@ type UserController struct {
 			}
 
 		// Make a gRPC call
-			_, err = u.Client.Delete(context.Background(), &user.DeleteRequest{ Id: int32(idInt) })
+			response, err := u.Client.Delete(context.Background(), &user.DeleteRequest{ Id: int32(idInt) })
 			var errorMessage string
-			if err != nil { errorMessage = err.Error() }
+			success := false
+			if err != nil {
+				errorMessage = err.Error()
+			} else {
+				success = response.GetSuccess()
+			}
 
 		// Return response
 			return c.JSON(fiber.Map{
-				"success": err==nil,
+				"success": success,
 				"error": errorMessage,
 			})
 	}
