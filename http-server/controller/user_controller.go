@@ -40,7 +40,7 @@ type UserController struct {
 		return c.JSON( response.Users )
 	}
 
-	func (u *UserController) New( c *fiber.Ctx ) error {
+	func (u *UserController) Add( c *fiber.Ctx ) error {
 		// Get form values
 			payload := struct {
 				Name  string `json:"name"`
@@ -60,7 +60,7 @@ type UserController struct {
 			}
 
 		// Make a gRPC call
-			response, err := u.Client.New(context.Background(), &user.PostRequest{
+			response, err := u.Client.Add(context.Background(), &user.PostRequest{
 				Name: payload.Name,
 				Email: payload.Email,
 				Age: int32(age),
