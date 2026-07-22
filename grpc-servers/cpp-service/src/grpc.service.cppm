@@ -62,7 +62,7 @@ public:
 		return grpc::Status::OK;
 	}
 
-	grpc::Status New(grpc::ServerContext* context, const user::PostRequest* request, user::SuccessResponse* response) override
+	grpc::Status Add(grpc::ServerContext* context, const user::PostRequest* request, user::SuccessResponse* response) override
 	{
 		// gRPC request with flatbuffers
 			// Create a request with flatbuffers
