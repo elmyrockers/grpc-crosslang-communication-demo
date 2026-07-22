@@ -126,7 +126,28 @@ public:
 
 	grpc::Status Delete(grpc::ServerContext* context, const user::DeleteRequest* request, user::SuccessResponse* response) override
 	{
-		std::print( stderr, "\n\nID: {}", request->id());
+		// gRPC request with flatbuffers
+			// Create a request with flatbuffers
+				flatbuffers::grpc::MessageBuilder mb;
+				auto fbRequest = user_fb::CreateDeleteRequest(mb, request->id());
+				mb.Finish(fbRequest);
+
+			// Send a request to rust-service
+				grpc::ClientContext clientContext;
+				auto requestMessage = mb.ReleaseMessage<user_fb::DeleteRequest>();
+				flatbuffers::grpc::Message<user_fb::SuccessResponse> responseMessage;
+				grpc::Status status = this->stub->Delete(&clientContext, requestMessage, &responseMessage);
+
+				std::print( stderr, "\n\n\nRequest Message:\nID: {}", requestMessage.GetRoot()->id());
+
+			// Send response back to http-server
+				bool isOK = false;
+				if (status.ok()) {
+					const user_fb::SuccessResponse* fbResponse = responseMessage.GetRoot();
+					isOK = fbResponse->success();
+				}
+				response->set_success( isOK );
+				std::print( stderr, "\n\nResponse Message:\nSuccess: {}", isOK );
 
 		return grpc::Status::OK;
 	}
