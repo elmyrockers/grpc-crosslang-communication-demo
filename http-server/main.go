@@ -15,7 +15,7 @@ import (
 
 func main() {
 	// Connect to go-service (gRPC server)
-		connection, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
+		connection, err := grpc.Dial("localhost:50053", grpc.WithInsecure())
 		if err != nil {
 			log.Fatalf("did not connect: %v", err)
 		}
@@ -40,7 +40,7 @@ func main() {
 	// API Routes
 		api := app.Group( "/api" )
 		api.Get("/users", userController.All )
-		api.Post("/users", userController.New )
+		api.Post("/users", userController.Add )
 		api.Patch("/users/:id", userController.Edit )
 		api.Delete("/users/:id", userController.Delete )
 
