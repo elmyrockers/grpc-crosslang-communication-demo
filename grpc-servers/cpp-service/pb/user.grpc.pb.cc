@@ -24,7 +24,7 @@ namespace user {
 
 static const char* UserService_method_names[] = {
   "/user.UserService/All",
-  "/user.UserService/New",
+  "/user.UserService/Add",
   "/user.UserService/Edit",
   "/user.UserService/Delete",
 };
@@ -37,7 +37,7 @@ std::unique_ptr< UserService::Stub> UserService::NewStub(const std::shared_ptr< 
 
 UserService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
   : channel_(channel), rpcmethod_All_(UserService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_New_(UserService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_Add_(UserService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_Edit_(UserService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_Delete_(UserService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
@@ -65,25 +65,25 @@ void UserService::Stub::async::All(::grpc::ClientContext* context, const ::user:
   return result;
 }
 
-::grpc::Status UserService::Stub::New(::grpc::ClientContext* context, const ::user::PostRequest& request, ::user::SuccessResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::user::PostRequest, ::user::SuccessResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_New_, context, request, response);
+::grpc::Status UserService::Stub::Add(::grpc::ClientContext* context, const ::user::PostRequest& request, ::user::SuccessResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::user::PostRequest, ::user::SuccessResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_Add_, context, request, response);
 }
 
-void UserService::Stub::async::New(::grpc::ClientContext* context, const ::user::PostRequest* request, ::user::SuccessResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::user::PostRequest, ::user::SuccessResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_New_, context, request, response, std::move(f));
+void UserService::Stub::async::Add(::grpc::ClientContext* context, const ::user::PostRequest* request, ::user::SuccessResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::user::PostRequest, ::user::SuccessResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_Add_, context, request, response, std::move(f));
 }
 
-void UserService::Stub::async::New(::grpc::ClientContext* context, const ::user::PostRequest* request, ::user::SuccessResponse* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_New_, context, request, response, reactor);
+void UserService::Stub::async::Add(::grpc::ClientContext* context, const ::user::PostRequest* request, ::user::SuccessResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_Add_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::user::SuccessResponse>* UserService::Stub::PrepareAsyncNewRaw(::grpc::ClientContext* context, const ::user::PostRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::user::SuccessResponse, ::user::PostRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_New_, context, request);
+::grpc::ClientAsyncResponseReader< ::user::SuccessResponse>* UserService::Stub::PrepareAsyncAddRaw(::grpc::ClientContext* context, const ::user::PostRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::user::SuccessResponse, ::user::PostRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_Add_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::user::SuccessResponse>* UserService::Stub::AsyncNewRaw(::grpc::ClientContext* context, const ::user::PostRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::user::SuccessResponse>* UserService::Stub::AsyncAddRaw(::grpc::ClientContext* context, const ::user::PostRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncNewRaw(context, request, cq);
+    this->PrepareAsyncAddRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -153,7 +153,7 @@ UserService::Service::Service() {
              ::grpc::ServerContext* ctx,
              const ::user::PostRequest* req,
              ::user::SuccessResponse* resp) {
-               return service->New(ctx, req, resp);
+               return service->Add(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       UserService_method_names[2],
@@ -187,7 +187,7 @@ UserService::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status UserService::Service::New(::grpc::ServerContext* context, const ::user::PostRequest* request, ::user::SuccessResponse* response) {
+::grpc::Status UserService::Service::Add(::grpc::ServerContext* context, const ::user::PostRequest* request, ::user::SuccessResponse* response) {
   (void) context;
   (void) request;
   (void) response;

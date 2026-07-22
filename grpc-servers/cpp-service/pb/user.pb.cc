@@ -317,7 +317,7 @@ const char descriptor_table_protodef_user_2eproto[] ABSL_ATTRIBUTE_SECTION_VARIA
     "\031\n\005users\030\001 \003(\0132\n.user.User\"\"\n\017SuccessRes"
     "ponse\022\017\n\007success\030\001 \001(\0102\323\001\n\013UserService\022*"
     "\n\003All\022\020.user.GetRequest\032\021.user.GetRespon"
-    "se\022/\n\003New\022\021.user.PostRequest\032\025.user.Succ"
+    "se\022/\n\003Add\022\021.user.PostRequest\032\025.user.Succ"
     "essResponse\0221\n\004Edit\022\022.user.PatchRequest\032"
     "\025.user.SuccessResponse\0224\n\006Delete\022\023.user."
     "DeleteRequest\032\025.user.SuccessResponseB\tZ\007"
