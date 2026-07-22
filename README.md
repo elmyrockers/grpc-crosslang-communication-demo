@@ -1,5 +1,5 @@
 # gRPC-CrossLang-Communication-Demo
-Minimal cross-language gRPC demo illustrating service-to-service communication between C++, Rust, and Go using FlatBuffers payloads.
+Minimal cross-language gRPC demo illustrating service-to-service communication between C++, Rust, and Go using Protobuf & FlatBuffers payloads.
 
 <div align="center">
 	<img src="img/grpc.svg" width="300px"/>
